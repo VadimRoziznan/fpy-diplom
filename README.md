@@ -1,1 +1,1 @@
-# fpy-diploma
+# fpy-diplom
