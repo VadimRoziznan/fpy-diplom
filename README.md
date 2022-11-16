@@ -37,14 +37,14 @@
 
 ### Инструменты/ дополнительные материалы, которые пригодятся для выполнения задания
 
-- PyCharm или VS Code
-- Python
-- Django
-- NodeJS
-- React
-- WebPack
-- Git + Github
-- reg.ru
+- [PyCharm](https://www.jetbrains.com/ru-ru/pycharm/download) или [VS Code](https://code.visualstudio.com)
+- [Python](https://www.python.org/)
+- [Django](https://github.com/django/django)
+- [NodeJS](https://nodejs.org/)
+- [React](https://reactjs.org/)
+- [WebPack](https://webpack.js.org/)
+- [Git](https://git-scm.com/) + [Github](https://github.com/)
+- [reg.ru](https://www.reg.ru/)
 
 #### Рекомендации по использованию инструментов/ дополнительных материалов
 
