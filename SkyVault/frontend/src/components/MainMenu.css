@@ -1,0 +1,10 @@
+.bg-light {
+  background-color: #e0ffff !important; /* Переопределяем светло-бирюзовый цвет */
+}
+
+.navbar-brand img {
+  max-width: 150px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: contain; /* Сохраняет пропорции внутри заданных размеров */
+}
