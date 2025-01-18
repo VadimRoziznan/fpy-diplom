@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="164" height="109" viewBox="0 0 164 109">
+    <defs>
+        <linearGradient id="prefix__a" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#D2D4DC"/>
+            <stop offset="100%" stop-color="#B6BACB"/>
+        </linearGradient>
+        <linearGradient id="prefix__d" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#787E96"/>
+            <stop offset="100%" stop-color="#8990B0"/>
+        </linearGradient>
+        <linearGradient id="prefix__h" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#001228"/>
+            <stop offset="100%" stop-color="#09346D"/>
+        </linearGradient>
+        <filter id="prefix__b" width="103.3%" height="106.7%" x="-1.7%" y="-1.7%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feColorMatrix in="shadowOffsetOuter1" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.251939467 0"/>
+        </filter>
+        <filter id="prefix__e" width="103.3%" height="106.7%" x="-1.7%" y="-1.7%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetInner1"/>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" k2="-1" k3="1" operator="arithmetic" result="shadowInnerInner1"/>
+            <feColorMatrix in="shadowInnerInner1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.130654502 0"/>
+        </filter>
+        <filter id="prefix__f" width="111.1%" height="113.3%" x="-5.6%" y="-3.3%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feColorMatrix in="shadowOffsetOuter1" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.303239729 0"/>
+        </filter>
+        <path id="prefix__c" d="M69.667 14.667v52c0 2.209-1.791 4-4 4h-52c-2.21 0-4-1.791-4-4v-52c0-2.21 1.79-4 4-4h52c2.209 0 4 1.79 4 4z"/>
+        <path id="prefix__g" d="M49.119 33.624c-.07-4.374-3.6-7.994-8.186-8.4-4.587-.403-8.758 2.538-9.675 6.825-.482 2.52.302 5.109 2.121 7.001.914.939 1.434 2.162 1.465 3.44v10.217c0 1.37 1.17 2.48 2.612 2.48h5.309c.693 0 1.357-.262 1.847-.726.49-.465.765-1.097.765-1.754V42.455c.03-1.277.555-2.498 1.472-3.432 1.426-1.476 2.233-3.396 2.27-5.4z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g fill="#E30611" fill-rule="nonzero">
+            <g>
+                <path d="M7 23.625L53.8 23.625 53.8 26.985 7 26.985zM46.8 20.265H0v-3.36h46.104l4.056-4.056V6.825h3.36v6.72c0 .445-.177.873-.492 1.188l-5.04 5.04c-.315.315-.743.492-1.188.492zM50.16.105L53.52.105 53.52 3.465 50.16 3.465z" transform="matrix(1 0 0 -1 99 108) translate(.92 37.4)"/>
+            </g>
+            <path d="M41 42.545v-25.2h1.68c.928 0 1.68-.752 1.68-1.68v-6.72c0-.928-.752-1.68-1.68-1.68h-6.72c-.928 0-1.68.752-1.68 1.68v6.72c0 .928.752 1.68 1.68 1.68h1.68v23.52H.92v3.36h38.4c.928 0 1.68-.752 1.68-1.68zm-3.36-31.92H41v3.36h-3.36v-3.36z" transform="matrix(1 0 0 -1 99 108)"/>
+            <path d="M59.48.545h-6.72c-.928 0-1.68.752-1.68 1.68v6.72c0 .928.752 1.68 1.68 1.68h1.68v6.024l-9.588 9.588c-.315.315-.492.743-.492 1.188v20.16H.92v3.36h45.12c.928 0 1.68-.752 1.68-1.68V28.121l9.588-9.588c.315-.315.492-.743.492-1.188v-6.72h1.68c.928 0 1.68-.752 1.68-1.68v-6.72c0-.928-.752-1.68-1.68-1.68zm-1.68 6.72h-3.36v-3.36h3.36v3.36z" transform="matrix(1 0 0 -1 99 108)"/>
+        </g>
+        <rect width="7" height="7" x="155" y="42" stroke="#E30611" stroke-width="3" rx="1"/>
+        <g fill="#001F37" transform="translate(1 1)">
+            <g fill-rule="nonzero">
+                <path d="M0 0.625L48.08 0.6 48.08 13.6 44.08 13.6 44.08 3.985 0 3.985z" transform="matrix(-1 0 0 1 69 3) translate(.92 58.4)"/>
+                <path d="M49 40.545V.345h-3.36v38.52H8.92v3.36h38.4c.928 0 1.68-.752 1.68-1.68z" transform="matrix(-1 0 0 1 69 3)"/>
+                <path d="M54.36 25.773v19.812H10.92v3.36h45.12c.928 0 1.68-.752 1.68-1.68V25.773h-3.36z" transform="matrix(-1 0 0 1 69 3)"/>
+                <path d="M62.36 18.773v33.812H18.92v3.36h45.12c.928 0 1.68-.752 1.68-1.68V18.773h-3.36z" transform="matrix(-1 0 0 1 69 3)"/>
+            </g>
+            <circle cx="4.5" cy="19.5" r="4.5"/>
+            <circle cx="21.75" cy="75.75" r="4.75"/>
+            <circle cx="21.5" cy="4.5" r="4.5"/>
+            <circle cx="13.5" cy="32.5" r="4.5"/>
+        </g>
+        <g transform="translate(43.333 16.333)">
+            <path fill="url(#prefix__a)" fill-rule="nonzero" d="M5.714 0h68.572C77.442 0 80 2.558 80 5.714v68.572C80 77.442 77.442 80 74.286 80H5.714C2.558 80 0 77.442 0 74.286V5.714C0 2.558 2.558 0 5.714 0z"/>
+            <use fill="#000" filter="url(#prefix__b)" xlink:href="#prefix__c"/>
+            <use fill="url(#prefix__d)" xlink:href="#prefix__c"/>
+            <use fill="#000" filter="url(#prefix__e)" xlink:href="#prefix__c"/>
+            <g>
+                <use fill="#000" filter="url(#prefix__f)" xlink:href="#prefix__g"/>
+                <use fill="url(#prefix__h)" xlink:href="#prefix__g"/>
+            </g>
+        </g>
+    </g>
+</svg>
