@@ -15,7 +15,7 @@ export const MainMenu = () => {
 
   // Основные ссылки меню
   const navLinks = [
-    { to: '/', title: 'Главная', protected: false },
+    { to: '/', title: 'SkyVault вторая память', protected: false },
     { to: '/storage', title: 'Хранилище', protected: true }, // Только для авторизованных
     { to: '/dashboard', title: 'Панель Администратора', protected: true }, // Только для авторизованных
   ];
