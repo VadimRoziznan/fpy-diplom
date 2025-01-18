@@ -1,0 +1,9 @@
+.img-size {
+  max-height: 600px;
+  transform-origin: center; /* Центрируем уменьшение */
+}
+
+.banner-bg {
+  background-color: #f8f9fa; /* Светло-серый фон */
+  width: 100%; /* Растягивает фон на всю ширину экрана */
+}
