@@ -1,34 +1,36 @@
-import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import React from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../redux/reducers/loginSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 
 import './MainMenu.css';
 
+
 export const MainMenu = () => {
-  // Состояние для отслеживания авторизации пользователя
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // Получаем статус авторизации из Redux
+  const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    setIsAuthenticated(false);
+    dispatch(logout());
+    navigate('/')
   };
 
-  // Основные ссылки меню
   const navLinks = [
     { to: '/', title: 'SkyVault вторая память', protected: false },
-    { to: '/storage', title: 'Хранилище', protected: true }, // Только для авторизованных
-    { to: '/dashboard', title: 'Панель Администратора', protected: true }, // Только для авторизованных
+    { to: '/storage', title: 'Хранилище', protected: true },
+    { to: '/dashboard', title: 'Панель Администратора', protected: true },
   ];
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        {/* Логотип */}
         <Link className="navbar-brand" to="/">
           <img src="/img/header-logo.jpg?v=1" alt="SkyVault" />
         </Link>
-
-        {/* Кнопка-гамбургер для мобильных устройств */}
         <button
           className="navbar-toggler"
           type="button"
@@ -40,12 +42,10 @@ export const MainMenu = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-
-        {/* Основное меню */}
         <div className="collapse navbar-collapse" id="navbarMain">
           <ul className="navbar-nav me-auto">
             {navLinks
-              .filter((link) => !link.protected || isAuthenticated) // Показывать только незащищенные ссылки или при авторизации
+              .filter((link) => !link.protected || isAuthenticated)
               .map((link, index) => (
                 <li key={index} className="nav-item">
                   <NavLink
@@ -57,8 +57,6 @@ export const MainMenu = () => {
                 </li>
               ))}
           </ul>
-
-          {/* Блок входа/выхода */}
           <ul className="navbar-nav ms-auto">
             {isAuthenticated ? (
               <li className="nav-item">
