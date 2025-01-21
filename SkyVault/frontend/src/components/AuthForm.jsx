@@ -1,6 +1,8 @@
 import React from 'react';
 
+
 const AuthForm = ({ formData, handleChange, handleSubmit, passwordError, loginError, togglePasswordVisibility, showPassword }) => {
+  
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
