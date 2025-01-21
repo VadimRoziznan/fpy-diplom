@@ -1,0 +1,41 @@
+/* Обычные ссылки */
+.navbar .nav-link {
+  text-decoration: none;
+  color: #000; /* Черный текст по умолчанию */
+  padding: 10px 15px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 50px; /* Делает фон овальным */
+}
+
+/* Активная ссылка с овальной подсветкой */
+.navbar .nav-link.active {
+  background-color: #0d6efd; /* Синий фон */
+  color: #fff !important; /* Белый текст, !important для приоритета */
+  border-radius: 50px; /* Скругленные края для овала */
+  padding-right: 1em;
+  padding-left: 1em;
+  width: 100%;
+}
+
+/* Эффект при наведении */
+.navbar .nav-link:hover {
+  background-color: #f0f0f0; /* Светло-серый фон при наведении */
+  color: #000;
+}
+
+/* Эффект при наведении для активных ссылок (не изменяется) */
+.navbar .nav-link.active:hover {
+  background-color: #0d6efd; /* Остается синим */
+  color: #fff !important; /* Остается белым */
+}
+
+/* Вертикальное меню */
+.navbar-nav.flex-column {
+  width: 100%; /* Занимает всю ширину контейнера */
+  padding-left: 0; /* Убираем отступы */
+  list-style: none; /* Убираем маркеры списка */
+}
+
+nav {
+  background-color: #f8f9fa; /* Светло-серый фон */
+}
