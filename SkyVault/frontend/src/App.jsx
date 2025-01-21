@@ -10,6 +10,7 @@ import { DashboardPage } from './pages/DashboardPage';
 import { NotFound } from './pages/NotFoundPages';
 import store from './redux/store';
 import history from './utils/history';
+import { PrivateRoute } from './utils/PrivateRoute';
 
 import './App.css';
 
@@ -22,8 +23,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} /> 
-            <Route path="/storage" element={<StoragePage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/storage" element={<PrivateRoute element={<StoragePage />} />} />
+            <Route path="/dashboard" element={<PrivateRoute element={<DashboardPage />} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

@@ -25,10 +25,7 @@ export const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log('Отправка формы с данными:', formData);
     dispatch(fetchLoginRequest(formData)); // Теперь просто передаем данные
-
   };
 
   const togglePasswordVisibility = () => {

@@ -47,7 +47,7 @@ export const MainMenu = () => {
             {navLinks
               .filter((link) => !link.protected || isAuthenticated)
               .map((link, index) => (
-                <li key={index} className="nav-item">
+                <li key={index} className="nav-item me-4">
                   <NavLink
                     className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                     to={link.to}
@@ -57,7 +57,7 @@ export const MainMenu = () => {
                 </li>
               ))}
           </ul>
-          <ul className="navbar-nav ms-auto">
+          <ul className="navbar-nav ms-auto ">
             {isAuthenticated ? (
               <li className="nav-item">
                 <button className="btn btn-link nav-link" onClick={handleLogout}>
@@ -66,7 +66,7 @@ export const MainMenu = () => {
               </li>
             ) : (
               <>
-                <li className="nav-item">
+                <li className="nav-item me-2">
                   <NavLink
                     className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                     to="/login"
