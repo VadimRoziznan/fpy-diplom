@@ -11,6 +11,7 @@ import './MainMenu.css';
 export const MainMenu = () => {
   // Получаем статус авторизации из Redux
   const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
+  const userId = useSelector((state) => state.login.user?.id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -21,7 +22,7 @@ export const MainMenu = () => {
 
   const navLinks = [
     { to: '/', title: 'SkyVault вторая память', protected: false },
-    { to: '/storage', title: 'Хранилище', protected: true },
+    { to: userId ? `/storage/${userId}` : '#', title: 'Хранилище', protected: true },
     { to: '/dashboard', title: 'Панель Администратора', protected: true },
   ];
 

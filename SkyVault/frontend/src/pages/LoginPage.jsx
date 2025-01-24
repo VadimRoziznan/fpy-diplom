@@ -1,5 +1,6 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // Импортируем useNavigate
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import AuthForm from '../components/AuthForm';
@@ -13,8 +14,10 @@ export const LoginPage = () => {
     password: '',
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // Инициализируем useNavigate
   const [showPassword, setShowPassword] = useState(false);
   const loading = useSelector((state) => state.login.isLoading);
+  const userId = useSelector((state) => state.login.user?.id);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +31,12 @@ export const LoginPage = () => {
     e.preventDefault();
     dispatch(fetchLoginRequest(formData)); // Отправляем данные на авторизацию
   };
+
+  useEffect(() => {
+    if (userId) {
+      navigate(`/storage/${userId}`);
+    }
+  }, [userId, navigate]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);

@@ -21,6 +21,7 @@
 .navbar .nav-link:hover {
   background-color: #f0f0f0; /* Светло-серый фон при наведении */
   color: #000;
+  width: 100%;
 }
 
 /* Эффект при наведении для активных ссылок (не изменяется) */
@@ -36,6 +37,6 @@
   list-style: none; /* Убираем маркеры списка */
 }
 
-nav {
+.navbar-cat-menu {
   background-color: #f8f9fa; /* Светло-серый фон */
 }

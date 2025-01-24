@@ -10,16 +10,13 @@ import Swal from 'sweetalert2';
 export function* fetchLoginSaga(action) {
   try {
     const { data, status } = yield call(fetchLogin, action.payload);
-
     if (status === 200) {
       yield Swal.fire({
         icon: 'success',
         title: 'Успешный вход!',
         text: 'Вы успешно вошли в систему!',
       });
-
-      yield put(fetchLoginSuccess(data));
-      
+      yield put(fetchLoginSuccess(data));   
     } else {
       yield Swal.fire({
         icon: 'error',

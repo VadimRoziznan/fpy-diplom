@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import './StorageMenu.css'; // Подключаем стили
+import './CategoriesMenu.css'; // Подключаем стили
 
-export const StorageMenu = ({ onCategoryChange }) => {
-  const [activeLink, setActiveLink] = useState('all');
+export const CategoriesMenu = ({ onCategoryChange }) => {
+  const [activeCategory, setActiveCategory] = useState('Все файлы');
 
   const categoryList = [
     { title: 'Все файлы', type: 'all', icon: 'bi bi-list' },
@@ -15,13 +15,15 @@ export const StorageMenu = ({ onCategoryChange }) => {
   ];
 
   const handleLinkClick = (title, type) => {
-    setActiveLink(title);
+    setActiveCategory(title);
     onCategoryChange(type);
   };
 
+  console.log('activeCategory', activeCategory);
+
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <nav className="navbar navbar-expand-lg navbar-light navbar-cat-menu">
         <div className="container-fluid">
           {/* Кнопка для мобильного меню */}
           <button
@@ -39,13 +41,13 @@ export const StorageMenu = ({ onCategoryChange }) => {
           {/* Вертикальное меню */}
           <div className="collapse navbar-collapse" id="navbarMain">
             <ul className="navbar-nav flex-column">
-              {categoryList.map((link, index) => (
+              {categoryList.map((category, index) => (
                 <li key={index} className="nav-item">
                   <button
-                    className={`nav-link text-start ${activeLink === link.title ? 'active' : ''}`}
-                    onClick={() => handleLinkClick(link.title, link.type)}
+                    className={`nav-link text-start ${activeCategory === category.title ? 'active' : ''}`}
+                    onClick={() => handleLinkClick(category.title, category.type)}
                   >
-                    <i className={`px-2 ${link.icon}`}></i> {link.title}
+                    <i className={`px-2 ${category.icon}`}></i> {category.title}
                   </button>
                 </li>
               ))}

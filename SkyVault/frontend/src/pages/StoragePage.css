@@ -1,3 +1,7 @@
 .color {
   background-color: #f8f9fa;
 }
+
+.container-fluid {
+  margin-bottom: 250px;
+}
