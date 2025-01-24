@@ -1,13 +1,18 @@
-import history from '../../utils/history';
+/*import history from '../../utils/history';
 
 const navigationMiddleware = () => (store) => (next) => (action) => {
   if (action.type === 'login/fetchLoginSuccess') {
-    // Навигация на главную страницу
-    console.log('Переход на главную страницу');
-    history.push('/storage'); // Используем history вместо useNavigate
+    const userId = action.payload?.id; // Получаем userId из action.payload
+
+    if (userId) {
+      // Перенаправляем на /storage/:id
+      history.push(`/storage/${userId}`);
+    } else {
+      console.error('Не удалось получить userId для перенаправления.');
+    }
   }
 
   return next(action);
 };
 
-export default navigationMiddleware;
+export default navigationMiddleware;*/

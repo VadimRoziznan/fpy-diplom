@@ -1,0 +1,41 @@
+.navbar-costume {
+  border-radius: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/* Базовые стили для иконки */
+.title-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--primary-color); /* Основной цвет текста/иконки */
+  padding: 10px 16px; /* Внутренние отступы */
+  border-radius: 8px; /* Скругленные углы */
+  background-color: transparent; /* Прозрачный фон по умолчанию */
+  box-shadow: none; /* Без тени по умолчанию */
+  transition: all 0.2s ease-in-out; /* Плавные переходы */
+  cursor: pointer; /* Указатель мыши при наведении */
+  user-select: none; /* Запрещаем выделение текста */
+}
+
+/* Состояние при наведении */
+.title-icon:hover {
+  background-color: var(--hover-background-color); /* Цвет фона при наведении */
+  color: var(--hover-color); /* Цвет текста/иконки при наведении */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Лёгкая тень при наведении */
+}
+
+/* Состояние "нажатия" */
+.title-icon:active {
+  transform: scale(0.95); /* Лёгкое уменьшение размера */
+  background-color: var(--primary-color); /* Меняем цвет фона */
+  color: var(--background-color); /* Меняем цвет текста/иконки */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Уменьшаем тень */
+}
+
+/* Состояние при фокусе (для клавиатуры) */
+.title-icon:focus {
+  outline: 2px solid var(--focus-color); /* Добавляем обводку */
+  outline-offset: 4px;
+}

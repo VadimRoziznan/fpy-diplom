@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './Footer.css';
 
-
 export const Footer = () => {
   return (
     <footer className="bg-dark text-white py-4">

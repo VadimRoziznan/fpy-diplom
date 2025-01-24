@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers/rootReducer';
 import rootSaga from './sagas/rootSaga';
-import navigationMiddleware from '../redux/middlewares/navigationMiddleware';
+/*import navigationMiddleware from '../redux/middlewares/navigationMiddleware';*/
 
 // Create the Saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -11,7 +11,7 @@ const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware).concat(navigationMiddleware()),
+    getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
 });
 
 // Run the root saga

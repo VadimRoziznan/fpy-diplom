@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const loginSlice = createSlice({
-  name: 'login',
+  name: 'user',
   initialState,
   reducers: {
     fetchLoginRequest: (state) => {
