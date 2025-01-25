@@ -1,4 +1,4 @@
-// deletelice.js
+// deleteSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const fileSlice = createSlice({

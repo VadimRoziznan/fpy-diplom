@@ -4,7 +4,7 @@ import {
   fetchFilesRequest,
   fetchFilesSuccess,
   fetchFilesFailure,
-} from '../reducers/fileSlise';
+} from '../reducers/fileManagerSlice';
 import Swal from 'sweetalert2';
 
 export function* fetchFilesSaga(action) {
