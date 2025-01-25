@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFilesRequest } from '../redux/reducers/fileSlise';
+import { fetchFilesRequest } from '../redux/reducers/fileManagerSlice';
 import { Loding } from '../components/Loding';
 import { GenerateIconWithFileName } from '../utils/utils';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -42,50 +42,54 @@ export const StorageFiles = ({ activeCategory }) => {
   };
 
   return (
-    <>
-      <div className="file-list">
-        {isLoading ? (
-          <div
-            className="container mb-5 mt-5"
-            style={{ paddingTop: '150px', paddingBottom: '50px', minHeight: '100vh' }}
-          >
-            <Loding />
-          </div>
-        ) : (
-          <div className="d-flex flex-wrap justify-content-end">
-            <OperationsMenu checkedFiles={checkedFiles} setCheckedFiles={setCheckedFiles}/>
-            <div className="file-row d-flex w-100 p-2">
-              <div className="file-column file-checkbox pb-3">
-                <input
-                  className="form-check-input rounded"
-                  type="checkbox"
-                  checked={filteredFiles.length > 0 && filteredFiles.every(file => checkedFiles.includes(file.fileId))}
-                  onChange={handleMainCheckboxChange}
-                />
-              </div>
-              <div className="file-column pb-3">
-                <p>Имя файла</p>
-              </div>
-              <div className="file-column pb-3">
-                <p>Дата создания</p>
-              </div>
-              <div className="file-column pb-3">
-                <p>Размер</p>
-              </div>
-            </div>
-            <div className="w-100 border-bottom"></div>
-            {filteredFiles.map((fileItem) => (
-              <FileRow
-                key={fileItem.fileId}
-                fileItem={fileItem}
-                checkedFiles={checkedFiles}
-                setCheckedFiles={setCheckedFiles}
-              />
-            ))}
-          </div>
-        )}
+<>
+  <div className="file-list">
+    {isLoading ? (
+      <div
+        className="container mb-5 mt-5"
+        style={{ paddingTop: '150px', paddingBottom: '50px', minHeight: '100vh' }}
+      >
+        <Loding />
       </div>
-    </>
+    ) : (
+      <div className="d-flex flex-wrap justify-content-end">
+        {/* Sticky OperationsMenu */}
+        <div className="operations-menu-sticky">
+          <OperationsMenu checkedFiles={checkedFiles} setCheckedFiles={setCheckedFiles} />
+        </div>
+        {/* Sticky Headers */}
+        <div className="file-row d-flex w-100 p-2 file-header-sticky">
+          <div className="file-column file-checkbox pb-3">
+            <input
+              className="form-check-input rounded"
+              type="checkbox"
+              checked={filteredFiles.length > 0 && filteredFiles.every(file => checkedFiles.includes(file.fileId))}
+              onChange={handleMainCheckboxChange}
+            />
+          </div>
+          <div className="file-column pb-3">
+            <p>Имя файла</p>
+          </div>
+          <div className="file-column pb-3">
+            <p>Дата создания</p>
+          </div>
+          <div className="file-column pb-3">
+            <p>Размер</p>
+          </div>
+        </div>
+        <div className="w-100 border-bottom"></div>
+        {filteredFiles.map((fileItem) => (
+          <FileRow
+            key={fileItem.fileId}
+            fileItem={fileItem}
+            checkedFiles={checkedFiles}
+            setCheckedFiles={setCheckedFiles}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+</>
   );
 };
 

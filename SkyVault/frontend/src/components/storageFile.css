@@ -31,3 +31,20 @@
 .border-bottom {
   border-bottom: 1px solid #ccc;
 }
+
+
+.operations-menu-sticky {
+  position: sticky;
+  top: 3.4rem; /* Задает расстояние от верхней части окна, на котором элемент будет "липнуть" */
+  z-index: 10; /* Устанавливает z-index, чтобы меню было над другими элементами */
+  background-color: white; /* Убедитесь, что фон установлен, чтобы перекрыть элементы под ним */
+  padding: 10px; /* Установите отступы по своему усмотрению */
+}
+
+.file-header-sticky {
+  position: sticky;
+  z-index: 9; /* Должен быть меньше чем у OperationsMenu, если он находится выше */
+  background-color: white;
+  top: 4.7rem;
+
+}

@@ -1,12 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import loginSlice from './loginSlice';
-import filesSlice from './fileSlise';
-import deleteSlice from './deleteSlice';
+
+import newSlice from './fileManagerSlice';
 
 const rootReducer = combineReducers({
   login: loginSlice,
-  data: filesSlice,
-  delete: deleteSlice
+  data: newSlice,
+  
 });
 
 export default rootReducer;

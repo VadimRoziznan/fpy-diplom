@@ -1,6 +1,6 @@
 // deleteSagas.js
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { deleteFileRequest, deleteFileSuccess, deleteFileFailure } from '../reducers/deleteSlice';
+import { deleteFileRequest, deleteFileSuccess, deleteFileFailure } from '../reducers/fileManagerSlice';
 import { fetchDeleteFile } from '../../api';
 
 function* deleteFileSaga(action) {
