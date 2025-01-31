@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFilesRequest } from '../redux/reducers/fileManagerSlice';
 import { Loding } from '../components/Loding';
-import { GenerateIconWithFileName } from '../utils/utils';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import './storageFile.css';
 import { OperationsMenu } from './OperationsMenu';
+import { TableHeader } from './TableHeader';
+import { TableBody } from './TableBody';
 
 export const StorageFiles = ({ activeCategory }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,13 @@ export const StorageFiles = ({ activeCategory }) => {
 
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [checkedFiles, setCheckedFiles] = useState([]);
+  const headers = [
+    { name: 'Имя файла', key: 'name' },
+    { name: 'Комментарий', key: 'comment' },
+    { name: 'Размер', key: 'size' },
+    { name: 'Дата загрузки', key: 'uploadDate' },
+    { name: 'Дата последнего скачивания', key: 'downloadDate' },
+  ]
 
   useEffect(() => {
     if (isInitialRender.current && userId) {
@@ -45,18 +53,11 @@ export const StorageFiles = ({ activeCategory }) => {
 <>
   <div className="file-list">
     {isLoading ? (
-      <div
-        className="container mb-5 mt-5"
-        style={{ paddingTop: '150px', paddingBottom: '50px', minHeight: '100vh' }}
-      >
         <Loding />
-      </div>
     ) : (
       <div className="d-flex flex-wrap justify-content-end">
-        {/* Sticky OperationsMenu */}
-        <div className="operations-menu-sticky">
-          <OperationsMenu checkedFiles={checkedFiles} setCheckedFiles={setCheckedFiles} />
-        </div>
+        {/* OperationsMenu */}
+        <OperationsMenu checkedFiles={checkedFiles} setCheckedFiles={setCheckedFiles} />
         {/* Sticky Headers */}
         <div className="file-row d-flex w-100 p-2 file-header-sticky">
           <div className="file-column file-checkbox pb-3">
@@ -67,19 +68,11 @@ export const StorageFiles = ({ activeCategory }) => {
               onChange={handleMainCheckboxChange}
             />
           </div>
-          <div className="file-column pb-3">
-            <p>Имя файла</p>
-          </div>
-          <div className="file-column pb-3">
-            <p>Дата создания</p>
-          </div>
-          <div className="file-column pb-3">
-            <p>Размер</p>
-          </div>
+          <TableHeader headers={headers} />
         </div>
         <div className="w-100 border-bottom"></div>
         {filteredFiles.map((fileItem) => (
-          <FileRow
+          <TableBody
             key={fileItem.fileId}
             fileItem={fileItem}
             checkedFiles={checkedFiles}
@@ -93,50 +86,3 @@ export const StorageFiles = ({ activeCategory }) => {
   );
 };
 
-const FileRow = ({ fileItem, checkedFiles, setCheckedFiles }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const isChecked = checkedFiles.includes(fileItem.fileId);
-
-  const handleCheckboxChange = () => {
-    if (isChecked) {
-      setCheckedFiles(checkedFiles.filter((fileId) => fileId !== fileItem.fileId));
-    } else {
-      setCheckedFiles([...checkedFiles, fileItem.fileId]);
-    }
-  };
-
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
-
-  return (
-    <>
-      <div
-        className={`file-row d-flex w-100 p-2 ${isHovered || isChecked ? 'hovered' : ''}`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <div className="file-column file-checkbox pb-3">
-          {(isHovered || isChecked) && (
-            <input
-              className="form-check-input rounded"
-              type="checkbox"
-              checked={isChecked}
-              onChange={handleCheckboxChange}
-            />
-          )}
-        </div>
-        <div className="file-column pb-3">
-          <GenerateIconWithFileName fileName={fileItem.name} link={fileItem.link} />
-        </div>
-        <div className="file-column pb-3">
-          {new Date(Date.now()).toLocaleDateString()}
-        </div>
-        <div className="file-column pb-3">
-          {fileItem.size} KB
-        </div>
-      </div>
-      <div className="w-100 border-bottom"></div>
-    </>
-  );
-};

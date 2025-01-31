@@ -23,7 +23,7 @@ export const MainMenu = () => {
   const navLinks = [
     { to: '/', title: 'SkyVault вторая память', protected: false },
     { to: userId ? `/storage/${userId}` : '#', title: 'Хранилище', protected: true },
-    { to: '/dashboard', title: 'Панель Администратора', protected: true },
+    { to: userId ? `/dashboard/${userId}` : '#', title: 'Панель Администратора', protected: true },
   ];
 
   return (

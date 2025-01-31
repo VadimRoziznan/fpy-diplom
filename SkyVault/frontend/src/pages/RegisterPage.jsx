@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRegisterRequest, resetUser } from '../redux/reducers/registerSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 import { validatePassword, validateLogin } from '../utils/utils';
 import AuthForm from '../components/AuthForm';
 
@@ -16,6 +19,10 @@ export const RegisterPage = () => {
   const [loginError, setLoginError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const userId = useSelector((state) => state.register.user?.id);
+  const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,6 +52,7 @@ export const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (passwordError || loginError) {
       Swal.fire({
         icon: 'error',
@@ -53,43 +61,21 @@ export const RegisterPage = () => {
       });
       return;
     }
-
-    try {
-      const response = await fetch('http://your-api-url/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Регистрация прошла успешно!',
-          text: 'Вы успешно зарегистрировались!',
-        });
-        setFormData({ login: '', username: '', email: '', password: '' });
-      } else {
-        const errorData = await response.json();
-        Swal.fire({
-          icon: 'error',
-          title: 'Ошибка',
-          text: errorData.message || 'Что-то пошло не так',
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Ошибка подключения к серверу',
-        text: 'Пожалуйста, попробуйте снова позже.',
-      });
-    }
+    console.log(formData);
+    dispatch(fetchRegisterRequest(formData));
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  useEffect(() => {
+    if (userId) {
+      console.log(userId);
+      navigate(`/storage/${userId}`);
+      dispatch(resetUser()); // Сброс userId
+    }
+  }, [userId, navigate, dispatch]);
 
   return (
     <div
