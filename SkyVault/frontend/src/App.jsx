@@ -23,7 +23,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} /> 
             <Route path="/storage/:id" element={<PrivateRoute element={<StoragePage />} />} />
-            <Route path="/dashboard" element={<PrivateRoute element={<DashboardPage />} />} />
+            <Route path="/dashboard/:id" element={<PrivateRoute element={<DashboardPage />} />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>

@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import AuthForm from '../components/AuthForm';
 import { fetchLoginRequest } from '../redux/reducers/loginSlice';
-import { Loding } from '../components/Loding';
+import { Loading } from '../components/Loading';
 
 
 export const LoginPage = () => {
@@ -49,7 +49,7 @@ export const LoginPage = () => {
   >
     {loading ? (
       // Блок загрузки
-      <Loding />
+      <Loading />
     ) : (
       // Основной блок с формой
       <div>

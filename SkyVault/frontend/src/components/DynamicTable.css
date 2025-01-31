@@ -1,0 +1,51 @@
+/* Убираем границы у таблицы */
+.table {
+  border: none;
+}
+
+/* Убираем границы между ячейками */
+.table th,
+.table td {
+  border: none;
+}
+
+/* Отключаем полосы для table-striped */
+.table-striped tbody tr:nth-of-type(odd) {
+  --bs-table-accent-bg: transparent;
+}
+
+/* Убираем hover-эффект */
+.table-hover tbody tr:hover {
+  --bs-table-accent-bg: transparent;
+}
+
+/* Выравниваем содержимое таблицы по центру */
+.table th,
+.table td {
+  vertical-align: middle; /* Вертикальное выравнивание */
+}
+
+/* DynamicTable.css */
+.table thead th {
+  position: sticky; /* Фиксируем заголовки */
+  top: 0; /* Заголовки остаются у верхнего края таблицы */
+  z-index: 10; /* Поверх содержимого таблицы */
+  background-color: #f8f9fa; /* Цвет фона заголовков таблицы */
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1); /* Легкая тень для визуального разделения */
+}
+
+/* Добавляем горизонтальные полосы между строками */
+.table tbody tr {
+  border-bottom: 1px solid #dee2e6; /* Горизонтальная линия */
+}
+
+/* Расширяем строки */
+.table tbody tr,
+.table thead th {
+  height: 120px; /* Увеличиваем высоту строк */
+}
+
+/* Дополнительно: hover-эффект для строк */
+.table-hover tbody tr:hover {
+  background-color: #f1f3f5; /* Легкий серый фон при наведении */
+}
