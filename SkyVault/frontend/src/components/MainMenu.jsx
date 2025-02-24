@@ -1,12 +1,11 @@
-import React from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../redux/reducers/loginSlice';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
+import React from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../redux/reducers/loginSlice";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
 
-import './MainMenu.css';
-
+import "./MainMenu.css";
 
 export const MainMenu = () => {
   // Получаем статус авторизации из Redux
@@ -17,13 +16,21 @@ export const MainMenu = () => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/')
+    navigate("/");
   };
 
   const navLinks = [
-    { to: '/', title: 'SkyVault вторая память', protected: false },
-    { to: userId ? `/storage/${userId}` : '#', title: 'Хранилище', protected: true },
-    { to: userId ? `/dashboard/${userId}` : '#', title: 'Панель Администратора', protected: true },
+    { to: "/", title: "SkyVault вторая память", protected: false },
+    {
+      to: userId ? `/storage/${userId}` : "#",
+      title: "Хранилище",
+      protected: true,
+    },
+    {
+      to: userId ? `/dashboard/${userId}` : "#",
+      title: "Панель Администратора",
+      protected: true,
+    },
   ];
 
   return (
@@ -50,7 +57,9 @@ export const MainMenu = () => {
               .map((link, index) => (
                 <li key={index} className="nav-item me-4">
                   <NavLink
-                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                    className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`
+                    }
                     to={link.to}
                   >
                     {link.title}
@@ -61,7 +70,10 @@ export const MainMenu = () => {
           <ul className="navbar-nav ms-auto ">
             {isAuthenticated ? (
               <li className="nav-item">
-                <button className="btn btn-link nav-link" onClick={handleLogout}>
+                <button
+                  className="btn btn-link nav-link"
+                  onClick={handleLogout}
+                >
                   Выход
                 </button>
               </li>
@@ -69,7 +81,9 @@ export const MainMenu = () => {
               <>
                 <li className="nav-item me-2">
                   <NavLink
-                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                    className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`
+                    }
                     to="/login"
                   >
                     Вход
@@ -77,7 +91,9 @@ export const MainMenu = () => {
                 </li>
                 <li className="nav-item">
                   <NavLink
-                    className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+                    className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`
+                    }
                     to="/register"
                   >
                     Регистрация

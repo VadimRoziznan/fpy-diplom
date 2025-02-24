@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const registerSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     fetchRegisterRequest: (state) => {
@@ -32,11 +32,11 @@ const registerSlice = createSlice({
   },
 });
 
-export const { 
+export const {
   fetchRegisterRequest,
   fetchRegisterSuccess,
   fetchRegisterFailure,
-  resetUser
+  resetUser,
 } = registerSlice.actions;
 
 export default registerSlice.reducer;

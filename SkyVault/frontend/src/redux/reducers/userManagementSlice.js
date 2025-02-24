@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: [], // Список файлов
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const usersSlice = createSlice({
-  name: 'users',
+  name: "users",
   initialState,
   reducers: {
     fetchUsersRequest: (state) => {

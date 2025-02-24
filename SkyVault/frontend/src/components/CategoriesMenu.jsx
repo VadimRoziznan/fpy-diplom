@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import './CategoriesMenu.css'; // Подключаем стили
+import React, { useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+import "./CategoriesMenu.css"; // Подключаем стили
 
-export const CategoriesMenu = ({ onCategoryChange, menuList, defaultCategory }) => {
+export const CategoriesMenu = ({
+  onCategoryChange,
+  menuList,
+  defaultCategory,
+}) => {
   const [activeCategory, setActiveCategory] = useState(defaultCategory);
 
   const handleLinkClick = (title, type) => {
@@ -34,7 +38,7 @@ export const CategoriesMenu = ({ onCategoryChange, menuList, defaultCategory }) 
               {menuList.map((item, index) => (
                 <li key={index} className="nav-item">
                   <button
-                    className={`nav-link text-start ${activeCategory === item.type ? 'active' : ''}`}
+                    className={`nav-link text-start ${activeCategory === item.type ? "active" : ""}`}
                     onClick={() => handleLinkClick(item.title, item.type)}
                   >
                     <i className={`px-2 ${item.icon}`}></i> {item.title}
