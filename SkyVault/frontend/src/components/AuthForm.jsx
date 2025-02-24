@@ -1,37 +1,44 @@
-import React from 'react';
+import React from "react";
 
-
-const AuthForm = ({ formData, handleChange, handleSubmit, passwordError, loginError, togglePasswordVisibility, showPassword }) => {
-  
+const AuthForm = ({
+  formData,
+  handleChange,
+  handleSubmit,
+  passwordError,
+  loginError,
+  togglePasswordVisibility,
+  showPassword,
+  isLogin,
+}) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label htmlFor="login" className="form-label">
+        <label htmlFor="username" className="form-label">
           Логин
         </label>
         <input
           type="text"
           className="form-control"
-          id="login"
-          name="login"
-          value={formData.login}
+          id="username"
+          name="username"
+          value={formData.username}
           placeholder="Введите логин"
           onChange={handleChange}
           required
         />
       </div>
-      {loginError && (<div className="text-danger mb-3">{loginError}</div>)}
-      {formData.username !== undefined && (
+      {loginError && <div className="text-danger mb-3">{loginError}</div>}
+      {formData.first_name !== undefined && (
         <div className="mb-3">
-          <label htmlFor="username" className="form-label">
+          <label htmlFor="first_name" className="form-label">
             Имя пользователя
           </label>
           <input
             type="text"
             className="form-control"
-            id="username"
-            name="username"
-            value={formData.username}
+            id="first_name"
+            name="first_name"
+            value={formData.first_name}
             placeholder="Введите имя пользователя"
             onChange={handleChange}
             required
@@ -60,7 +67,7 @@ const AuthForm = ({ formData, handleChange, handleSubmit, passwordError, loginEr
           Пароль
         </label>
         <input
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           className="form-control"
           id="password"
           name="password"
@@ -72,11 +79,11 @@ const AuthForm = ({ formData, handleChange, handleSubmit, passwordError, loginEr
         <span
           onClick={togglePasswordVisibility}
           style={{
-            position: 'absolute',
-            top: '55%',
-            right: '10px',
-            cursor: 'pointer',
-            color: '#000',
+            position: "absolute",
+            top: "55%",
+            right: "10px",
+            cursor: "pointer",
+            color: "#000",
           }}
         >
           {showPassword ? (
@@ -86,9 +93,9 @@ const AuthForm = ({ formData, handleChange, handleSubmit, passwordError, loginEr
           )}
         </span>
       </div>
-      {passwordError && (<div className="text-danger mb-3">{passwordError}</div>)}
-      <button type="submit" className="btn btn-primary w-100">
-        {formData.username === undefined ? 'Войти' : 'Зарегистрироваться'}
+      {passwordError && <div className="text-danger mb-3">{passwordError}</div>}
+      <button type="submit" name="submit" className="btn btn-primary w-100">
+        {isLogin ? "Войти" : "Зарегистрироваться"}
       </button>
     </form>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { CategoriesMenu } from "../components/CategoriesMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFilesRequest } from "../redux/reducers/fileManagerSlice";
@@ -8,7 +8,8 @@ import { OperationsMenu } from "../components/OperationsMenu";
 import { sectionsList } from "../constants/menuLists";
 import { DynamicTable } from "../components/DynamicTable";
 import { fetchUsersRequest } from "../redux/reducers/userManagementSlice";
-import { headers, menuList } from "../constants/menuLists";
+import { usersHeaders, adminMenuList } from "../constants/menuLists";
+import { changeUserStatusAdmin } from "../api";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./StoragePage.css";
 import "../components/storageFile.css";
@@ -22,9 +23,9 @@ export const DashboardPage = () => {
   const [users, setUsers] = useState([]); // Локальное состояние для пользователей
 
   const isLoading = useSelector((state) => state.users.isLoading);
-  const isInitialRender = useRef(true);
   const [checkedUser, setCheckedUser] = useState([]);
   const [hoveredUserId, setHoveredUserId] = useState(null); // New state for tracking hovered user
+  const location = useLocation();
 
   // Синхронизация состояния users с usersData
   useEffect(() => {
@@ -32,26 +33,55 @@ export const DashboardPage = () => {
   }, [usersData]);
 
   useEffect(() => {
-    if (isInitialRender.current && userId) {
-      dispatch(fetchUsersRequest(userId));
-      isInitialRender.current = false;
-    }
+    dispatch(fetchUsersRequest(userId));
   }, [dispatch, userId]);
+
+  useEffect(() => {
+    if (userId) {
+      console.log("useEffect fdd");
+      dispatch(fetchFilesRequest(userId));
+    }
+  }, [dispatch, userId, location.pathname]);
+
+  const handleRefreshData = () => {
+    console.log("handleRefreshData userId", userId);
+    if (userId) {
+      console.log("handleRefreshData sdgsg");
+      dispatch(fetchFilesRequest(userId));
+    }
+  };
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
   };
 
   const handleViewUser = (userId) => {
-    navigate(`/storage/${userId}`)
+    navigate(`/user-files/${userId}`);
   };
 
-  const toggleUserAdmin = (userId) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === userId ? { ...user, isAdmin: !user.isAdmin } : user
-      )
-    );
+  const toggleUserAdmin = async (userId) => {
+    const userToUpdate = users.find((user) => user.id === userId);
+
+    try {
+      // Отправляем запрос на сервер для изменения статуса
+      const response = await changeUserStatusAdmin(
+        userId,
+        !userToUpdate.is_staff,
+      );
+      console.log("Response:", response);
+      if (response.ok) {
+        // Если запрос успешен, обновляем локальное состояние
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === userId ? { ...user, is_staff: !user.is_staff } : user,
+          ),
+        );
+      } else {
+        console.error("Не удалось изменить статус пользователя");
+      }
+    } catch (error) {
+      console.error("Ошибка при изменении статуса пользователя:", error);
+    }
   };
 
   return (
@@ -60,7 +90,7 @@ export const DashboardPage = () => {
         <div className="col-12 col-md-2 border-top border-end p-3 color">
           <CategoriesMenu
             onCategoryChange={handleCategoryChange}
-            menuList={menuList}
+            menuList={adminMenuList}
             defaultCategory={"users"}
           />
         </div>
@@ -71,15 +101,17 @@ export const DashboardPage = () => {
             <>
               <div className="d-flex flex-wrap justify-content-end file-header-sticky">
                 <OperationsMenu
+                  userId={userId}
                   checkedFiles={checkedUser}
                   setCheckedFiles={setCheckedUser}
                   sectionsList={sectionsList}
+                  onRefreshData={handleRefreshData} // Передаём callback для обновления данных
                 />
               </div>
 
               <DynamicTable
                 data={users}
-                headers={headers}
+                headers={usersHeaders}
                 checkedFiles={checkedUser}
                 setCheckedFiles={setCheckedUser}
                 checkbox={true}
@@ -87,7 +119,7 @@ export const DashboardPage = () => {
                 renderRowActions={(user) => (
                   <i
                     className={`bi ${
-                      user.isAdmin
+                      user.is_staff
                         ? "bi-check-circle-fill text-success"
                         : "bi-x-circle-fill text-danger"
                     }`}
@@ -99,7 +131,7 @@ export const DashboardPage = () => {
                   ></i>
                 )}
                 onRowHover={(user) => setHoveredUserId(user.id)}
-                rowKey="id"
+                /*rowKey="id"*/
               />
             </>
           )}

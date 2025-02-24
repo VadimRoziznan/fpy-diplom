@@ -1,11 +1,11 @@
-import { takeEvery, put, call } from 'redux-saga/effects';
-import { fetchFiles } from '../../api';
+import { takeEvery, put, call } from "redux-saga/effects";
+import { fetchFiles } from "../../api";
 import {
   fetchFilesRequest,
   fetchFilesSuccess,
   fetchFilesFailure,
-} from '../reducers/fileManagerSlice';
-import Swal from 'sweetalert2';
+} from "../reducers/fileManagerSlice";
+import Swal from "sweetalert2";
 
 export function* fetchFilesSaga(action) {
   try {
@@ -15,9 +15,9 @@ export function* fetchFilesSaga(action) {
   } catch (error) {
     yield put(fetchFilesFailure(error.message));
     yield call(Swal.fire, {
-      icon: 'error',
-      title: 'Ошибка подключения к серверу',
-      text: 'Пожалуйста, попробуйте снова позже.',
+      icon: "error",
+      title: "Ошибка подключения к серверу",
+      text: "Пожалуйста, попробуйте снова позже.",
     });
   }
 }

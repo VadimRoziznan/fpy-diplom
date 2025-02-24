@@ -1,20 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
-import rootReducer from './reducers/rootReducer';
-import rootSaga from './sagas/rootSaga';
-/*import navigationMiddleware from '../redux/middlewares/navigationMiddleware';*/
+import { configureStore } from "@reduxjs/toolkit";
+import createSagaMiddleware from "redux-saga";
+import rootReducer from "./reducers/rootReducer";
+import rootSaga from "./sagas/rootSaga";
 
-// Create the Saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
-// Configure the Redux store
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: false, // Отключаем Thunk, так как используется Saga
+    }).concat(sagaMiddleware),
 });
 
-// Run the root saga
+// Запускаем Saga
 sagaMiddleware.run(rootSaga);
 
 export default store;

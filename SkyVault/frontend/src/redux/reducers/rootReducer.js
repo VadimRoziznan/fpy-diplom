@@ -1,15 +1,15 @@
-import { combineReducers } from '@reduxjs/toolkit';
-import loginSlice from './loginSlice';
-import newSlice from './fileManagerSlice';
-import usersSlice from './userManagementSlice';
-import registerSlice from './registerSlice';
+import { combineReducers } from "@reduxjs/toolkit";
+import loginSlice from "./loginSlice";
+import usersSlice from "./userManagementSlice";
+import registerSlice from "./registerSlice";
+import fileManagerSlice from "./fileManagerSlice";
 
 const rootReducer = combineReducers({
   login: loginSlice,
-  data: newSlice,
+  /*data: fileManagerSlice,*/
   users: usersSlice,
-  register: registerSlice
-  
+  register: registerSlice,
+  fileManager: fileManagerSlice, // Подключаем редьюсер
 });
 
 export default rootReducer;

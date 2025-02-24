@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // Импортируем useNavigate
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import AuthForm from '../components/AuthForm';
-import { fetchLoginRequest } from '../redux/reducers/loginSlice';
-import { Loading } from '../components/Loading';
-
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Импортируем useNavigate
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+import AuthForm from "../components/AuthForm";
+import { fetchLoginRequest } from "../redux/reducers/loginSlice";
+import { Loading } from "../components/Loading";
 
 export const LoginPage = () => {
   const [formData, setFormData] = useState({
-    login: '',
-    password: '',
+    username: "",
+    password: "",
   });
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Инициализируем useNavigate
@@ -44,29 +43,30 @@ export const LoginPage = () => {
 
   return (
     <div
-    className="container mb-5 mt-5"
-    style={{ paddingTop: '150px', paddingBottom: '50px', minHeight: '100vh' }}
-  >
-    {loading ? (
-      // Блок загрузки
-      <Loading />
-    ) : (
-      // Основной блок с формой
-      <div>
-        <h1 className="text-center">Вход</h1>
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <AuthForm 
-              formData={formData} 
-              handleChange={handleChange} 
-              handleSubmit={handleSubmit}
-              togglePasswordVisibility={togglePasswordVisibility}
-              showPassword={showPassword}
-            />
+      className="container mb-5 mt-5"
+      style={{ paddingTop: "150px", paddingBottom: "50px", minHeight: "100vh" }}
+    >
+      {loading ? (
+        // Блок загрузки
+        <Loading />
+      ) : (
+        // Основной блок с формой
+        <div>
+          <h1 className="text-center">Вход</h1>
+          <div className="row justify-content-center">
+            <div className="col-md-6">
+              <AuthForm
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                togglePasswordVisibility={togglePasswordVisibility}
+                showPassword={showPassword}
+                isLogin={true} // Указываем, что это форма входа
+              />
+            </div>
           </div>
         </div>
-      </div>
-    )}
-  </div>
-);
+      )}
+    </div>
+  );
 };

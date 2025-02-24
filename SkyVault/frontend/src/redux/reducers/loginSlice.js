@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const loginSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     fetchLoginRequest: (state) => {
@@ -28,12 +28,13 @@ const loginSlice = createSlice({
     },
     logout: (state) => {
       state.user = null;
+      /*state.login = false;*/
       state.isAuthenticated = false; // Сбрасываем авторизацию при выходе
     },
   },
 });
 
-export const { 
+export const {
   fetchLoginRequest,
   fetchLoginSuccess,
   fetchLoginFailure,
