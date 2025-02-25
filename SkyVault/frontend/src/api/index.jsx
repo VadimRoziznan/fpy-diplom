@@ -1,15 +1,12 @@
-import { useEffect } from "react";
-import Cookies from "js-cookie";
-
 export const BASE_URL = "http://127.0.0.1:8000";
 
-export const fetchLogin = async (formData) => {
+/* Функция для отправки данных на сервер при авторизации */
+export const fetchLoginApi = async (formData) => {
   const response = await fetch(`${BASE_URL}/login/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-
     body: JSON.stringify(formData),
   });
 
@@ -17,40 +14,58 @@ export const fetchLogin = async (formData) => {
   return { data, status: response.status };
 };
 
-export const fetchFiles = async (userId) => {
+/* Функция для получения списка файлов */
+export const fetchFilesApi = async (userId) => {
   const response = await fetch(`${BASE_URL}/storage/${userId}/`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
-
   const data = await response.json();
 
-  // Убедиться, что data является массивом
+  /* Убеждаемся, что data является массивом */
   const filesArray = Array.isArray(data) ? data : [data];
 
   return filesArray;
 };
 
-export const fetchDeleteFile = async (userId, fileId) => {
+/* Функция для удаления файла */
+export const deleteFileApi = async (userId, fileId) => {
   const response = await fetch(
     `${BASE_URL}/storage/${userId}/?file_id=${fileId}`,
     {
       method: "DELETE",
     },
   );
-
   if (!response.ok) {
     throw new Error(
       `Failed to delete file with ID ${fileId}: ${response.statusText}`,
     );
   }
-
-  console.log("response", response);
-
   return response;
 };
 
-export const fetchUsers = async (userId) => {
+/* Функция для удаления пользователя */
+export const deleteUserApi = async (userId, idToDelete) => {
+  const response = await fetch(
+    `${BASE_URL}/user-delete/`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({userId: userId, idToDelete: idToDelete}),
+    },
+  );
+  if (!response.ok) {
+    throw new Error(
+      `Failed to delete user with ID ${idToDelete}: ${response.statusText}`,
+    );
+  }
+  return response;
+};
+
+/* Функция для получения списка пользователей */
+export const fetchUsersApi = async (userId) => {
   const response = await fetch(`${BASE_URL}/dashboard/${userId}`);
   if (!response.ok) {
     throw new Error(response.statusText);
@@ -59,7 +74,8 @@ export const fetchUsers = async (userId) => {
   return response.json();
 };
 
-export const fetchRegister = async (formData) => {
+/* Функция для регистрации */
+export const fetchRegisterApi = async (formData) => {
   const response = await fetch(`${BASE_URL}/register/`, {
     method: "POST",
     headers: {
@@ -71,36 +87,32 @@ export const fetchRegister = async (formData) => {
   return { data, status: response.status };
 };
 
-// Функция для отправки файла на сервер
+/* Функция для загрузки файла на сервер */
 export const uploadFileApi = async (formData) => {
-  /*await initializeCsrf(); // Инициализируем CSRF cookie перед отправкой запроса*/
-  console.log("formData.get", formData.get("userId"));
   const response = await fetch(
     `${BASE_URL}/user-files/${formData.get("userId")}/`,
     {
       method: "POST",
-
-      credentials: "include", // Включаем отправку cookie
-      body: formData, // Отправляем formData напрямую
+      body: formData,
     },
   );
 
   if (!response.ok) {
-    // Если сервер вернул ошибку, пытаемся получить текст или JSON ошибки
     let errorDetail = "Ошибка при загрузке файла";
     try {
       const errorResponse = await response.json();
-      errorDetail = errorResponse.error || errorDetail; // Берем сообщение из ответа сервера
+      errorDetail = errorResponse.error || errorDetail;
     } catch (e) {
       errorDetail = await response.text();
     }
-    throw new Error(errorDetail); // Бросаем кастомное исключение с сообщением об ошибке
+    throw new Error(errorDetail);
   }
 
-  return await response.json(); // Успешный ответ
+  return await response.json();
 };
 
-export const changeUserStatusAdmin = async (userId, isStaff) => {
+/* Функция для изменения статуса пользователя */
+export const changeUserStatusApi = async (userId, isStaff) => {
   const response = await fetch(
     `${BASE_URL}/dashboard/change-status/user/${userId}/`,
     {
@@ -115,20 +127,21 @@ export const changeUserStatusAdmin = async (userId, isStaff) => {
   return response;
 };
 
-export const downloadFile = async (fileId) => {
+/* Функция для скачивания файлов на локальный компьютер */
+export const downloadFileApi = async (fileId) => {
   const response = await fetch(`${BASE_URL}/download/${fileId}/`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }
 
   const data = await response.json();
-
-  // Убедиться, что data является массивом
+  // Убеждаемся, что data является массивом
   const filesLinkArray = Array.isArray(data) ? data : [data];
 
   return filesLinkArray;
 };
 
+/* Функция для переименования файлов */
 export const renameFileApi = async ({ userId, fileId, newName }) => {
   const response = await fetch(`${BASE_URL}/rename-file/`, {
     method: "PATCH",
@@ -145,6 +158,8 @@ export const renameFileApi = async ({ userId, fileId, newName }) => {
   return response.status;
 };
 
+
+/* Функция для изменения комментария */
 export const changeFileCommentApi = async ({ userId, fileId, newComment }) => {
   const response = await fetch(`${BASE_URL}/change-file-comment/`, {
     method: "PATCH",
@@ -161,3 +176,21 @@ export const changeFileCommentApi = async ({ userId, fileId, newComment }) => {
   return response.status;
 };
 
+/* Функция для получения ссылки на файл */
+export const fetchShareLinkApi = async ({ fileId }) => {
+  console.log("getShareLinkApi fileId", fileId);
+  const response = await fetch(`${BASE_URL}/get-share-link/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ fileId }),
+  });
+
+  if (!response.ok) {
+    throw new Error(response.statusText || "Ошибка при получении ссылки");
+  }
+
+  const link = await response.text();
+  return link;
+};

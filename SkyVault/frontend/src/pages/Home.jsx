@@ -1,14 +1,11 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
 import "./Home.css";
 import { Link } from "react-router-dom";
 
+/* Страница главная */
 export const Home = () => {
   return (
     <>
-      {/* Баннер*/}
-
       <div className="banner-bg mt-5">
         <div className="container py-5">
           <div className="row mb-5 py-5 justify-content-around">
@@ -27,9 +24,11 @@ export const Home = () => {
                 </p>
               </div>
               <div className="d-flex justify-content-start py-4">
-                <button type="button" className="btn btn-primary btn-lg w-50">
-                  Загрузить файлы
-                </button>
+                <Link className="w-100 " to="/login">
+                  <button type="button" className="btn btn-primary btn-lg w-50" to="/login">
+                    Загрузить файлы
+                  </button>
+                </Link>
               </div>
               <div className="row mb-5 py-5">
                 <div className="col">
@@ -72,16 +71,12 @@ export const Home = () => {
           </div>
         </div>
       </div>
-
       <div className="container py-5">
         {/* Заголовок */}
-
         <div className="container py-5">
           <h3 className="fw-bold">Как работает облако для хранения файлов</h3>
         </div>
-
         {/* Контейнер с тремя горизонтальными блоками */}
-
         <div className="row text-center mb-5 py-5">
           <div className="col-md-4">
             <img
@@ -129,15 +124,11 @@ export const Home = () => {
             </p>
           </div>
         </div>
-
         {/* Заголовок */}
-
         <div className="container py-5">
           <h3 className="fw-bold">Что умеет SkyVault Вторая память</h3>
         </div>
-
         {/* Первый ряд - текст слева, изображение справа */}
-
         <div className="row align-items-center justify-content-center mb-1 py-5">
           <div className="col-md-6">
             <h4 className="mb-2 fw-bold">Хранить телефонные книги</h4>
@@ -153,9 +144,7 @@ export const Home = () => {
             />
           </div>
         </div>
-
         {/* Второй ряд - изображение слева, текст справа */}
-
         <div className="row align-items-center justify-content-center mb-1 py-0 flex-md-row-reverse">
           <div className="col-md-6">
             <h4 className="mb-2 fw-bold">Восстанавливать контакты</h4>
@@ -169,9 +158,7 @@ export const Home = () => {
             />
           </div>
         </div>
-
         {/* Третий ряд - текст слева, изображение справа */}
-
         <div className="row align-items-center justify-content-center mb-1 py-0">
           <div className="col-md-6">
             <h4 className="mb-2 fw-bold">Освобождать место</h4>

@@ -1,5 +1,6 @@
 import React from "react";
 
+/* Компонент формы авторизации */
 const AuthForm = ({
   formData,
   handleChange,

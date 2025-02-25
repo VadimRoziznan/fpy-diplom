@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import "./FileUpload.css"; // Добавим стили для модального окна
+import "./FileUpload.css";
 
+/* Компонент для загрузки файлов */
 export const FileUpload = ({ userId, onUpload, onClose }) => {
   const [file, setFile] = useState(null);
   const [comment, setComment] = useState("");
-  /*const userId = useSelector((state) => state.login.user?.id);*/
 
+  /* Обработчик изменения файла */
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
+  /* Обработчик изменения комментария */
   const handleCommentChange = (e) => {
     setComment(e.target.value);
   };
 
+  /* Обработчик отправки формы */
   const handleSubmit = (e) => {
     e.preventDefault();
     if (file) {

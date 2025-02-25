@@ -1,5 +1,5 @@
 import { takeEvery, put, call } from "redux-saga/effects";
-import { fetchUsers } from "../../api";
+import { fetchUsersApi } from "../../api";
 import {
   fetchUsersRequest,
   fetchUsersSuccess,
@@ -7,11 +7,12 @@ import {
 } from "../reducers/userManagementSlice";
 import Swal from "sweetalert2";
 
+/* Saga для получения списка пользователей */
 export function* fetchUsersSaga(action) {
   try {
-    const userId = action.payload; // Получение userId из действия
-    const data = yield call(fetchUsers, userId);
-    yield put(fetchUsersSuccess(data));
+    const userId = action.payload;
+    const data = yield call(fetchUsersApi, userId);
+    yield put(fetchUsersSuccess(data)); // Сохраняем данные в Redux
   } catch (error) {
     yield put(fetchUsersFailure(error.message));
     yield call(Swal.fire, {

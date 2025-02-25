@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
-import "./CategoriesMenu.css"; // Подключаем стили
+import "./CategoriesMenu.css";
 
+/* Компонент вертикального меню */
 export const CategoriesMenu = ({
   onCategoryChange,
   menuList,
@@ -10,6 +9,7 @@ export const CategoriesMenu = ({
 }) => {
   const [activeCategory, setActiveCategory] = useState(defaultCategory);
 
+  /* Обработчик клика по пункту меню */
   const handleLinkClick = (title, type) => {
     setActiveCategory(type);
     onCategoryChange(type);
@@ -19,7 +19,7 @@ export const CategoriesMenu = ({
     <div>
       <nav className="navbar navbar-expand-lg navbar-light navbar-cat-menu">
         <div className="container-fluid">
-          {/* Кнопка для мобильного меню */}
+          {/* Кнопка для мобильного меню(хотел адаптировать но не успел)*/}
           <button
             className="navbar-toggler"
             type="button"

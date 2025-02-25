@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { GenerateIconWithFileName } from "../utils/utils";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
 import "./DynamicTable.css";
 
+/* Компонент динамической таблицы */
 export const DynamicTable = ({
   data = [], // данные для таблицы
   headers = [], // заголовки столбцов
@@ -13,10 +12,11 @@ export const DynamicTable = ({
   onRowСlick = () => {}, // обработчик клика по строке
   renderRowActions = null, // функция для рендера дополнительных действий в строке
   onRowHover = null, // обработчик ховера строки
-  /*rowKey = "id", // уникальный ключ строки*/
 }) => {
+
   const [hoveredRow, setHoveredRow] = useState(null);
-  // Обработчик изменения состояния чекбокса строки
+
+  /* Обработчик изменения состояния чекбокса */
   const toggleRowCheckbox = (fileId) => {
     setCheckedFiles((prev) =>
       prev.includes(fileId)
@@ -25,29 +25,27 @@ export const DynamicTable = ({
     );
   };
 
-  // Обработчик изменения состояния главного чекбокса
+  /* Обработчик изменения состояния главного чекбокса */
   const toggleAllCheckboxes = () => {
     setCheckedFiles(
       checkedFiles.length === data.length ? [] : data.map((row) => row.id),
     );
   };
 
-  // Рендер содержимого ячеек строки
+  /* Функция для рендера содержимого ячейки */
   const renderCellContent = (header, row) => {
-    //console.log('header', header)
-    //console.log('row', row)
     if (header.key === "file_name") {
       return (
         <GenerateIconWithFileName fileName={row.file_name} link={row.link} />
       );
     }
+
     if (header.key === "first_name") {
       return (
         <GenerateIconWithFileName fileName={row.first_name} link={row.link} />
       );
     }
-
-    // Если у заголовка есть ключ 'actions', вызываем renderRowActions
+    
     if (header.key === "is_staff" && renderRowActions) {
       return renderRowActions(row);
     }

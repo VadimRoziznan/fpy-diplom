@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CategoriesMenu } from "../components/CategoriesMenu";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,66 +9,63 @@ import { sectionsList } from "../constants/menuLists";
 import { DynamicTable } from "../components/DynamicTable";
 import { fetchUsersRequest } from "../redux/reducers/userManagementSlice";
 import { usersHeaders, adminMenuList } from "../constants/menuLists";
-import { changeUserStatusAdmin } from "../api";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { changeUserStatusApi } from "../api";
 import "./StoragePage.css";
 import "../components/storageFile.css";
 
+/* Страница для администратора */
 export const DashboardPage = () => {
+  //eslint-disable-next-line
   const [activeCategory, setActiveCategory] = useState("users");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userId = useSelector((state) => state.login.user?.id);
-  const usersData = useSelector((state) => state.users.data); // Данные из Redux
-  const [users, setUsers] = useState([]); // Локальное состояние для пользователей
-
+  const usersData = useSelector((state) => state.users.data);
+  const [users, setUsers] = useState([]);
   const isLoading = useSelector((state) => state.users.isLoading);
   const [checkedUser, setCheckedUser] = useState([]);
-  const [hoveredUserId, setHoveredUserId] = useState(null); // New state for tracking hovered user
+  //eslint-disable-next-line
+  const [hoveredUserId, setHoveredUserId] = useState(null);
   const location = useLocation();
 
-  // Синхронизация состояния users с usersData
+
+  /* Синхронизация состояния users с usersData */
   useEffect(() => {
     setUsers(usersData || []); // Если usersData пустой, устанавливаем пустой массив
   }, [usersData]);
 
+  /* Получение списка пользователей */
   useEffect(() => {
     dispatch(fetchUsersRequest(userId));
   }, [dispatch, userId]);
 
+  /* Обновляем данные файлов при смене пользователя или страницы */
   useEffect(() => {
     if (userId) {
-      console.log("useEffect fdd");
       dispatch(fetchFilesRequest(userId));
     }
   }, [dispatch, userId, location.pathname]);
 
-  const handleRefreshData = () => {
-    console.log("handleRefreshData userId", userId);
-    if (userId) {
-      console.log("handleRefreshData sdgsg");
-      dispatch(fetchFilesRequest(userId));
-    }
-  };
-
+  /* Обработчик изменения категории */
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
   };
 
+  /* Обработчик просмотра пользователя перенаправляет на страницу с файлами пользователя */
   const handleViewUser = (userId) => {
     navigate(`/user-files/${userId}`);
   };
 
+  /* Обработчик изменения статуса пользователя */
   const toggleUserAdmin = async (userId) => {
     const userToUpdate = users.find((user) => user.id === userId);
 
     try {
       // Отправляем запрос на сервер для изменения статуса
-      const response = await changeUserStatusAdmin(
+      const response = await changeUserStatusApi(
         userId,
         !userToUpdate.is_staff,
       );
-      console.log("Response:", response);
       if (response.ok) {
         // Если запрос успешен, обновляем локальное состояние
         setUsers((prevUsers) =>
@@ -105,10 +102,10 @@ export const DashboardPage = () => {
                   checkedFiles={checkedUser}
                   setCheckedFiles={setCheckedUser}
                   sectionsList={sectionsList}
-                  onRefreshData={handleRefreshData} // Передаём callback для обновления данных
+                  userDelete={true}
+                  allowedMenuItems={["delete"]}
                 />
               </div>
-
               <DynamicTable
                 data={users}
                 headers={usersHeaders}
@@ -131,7 +128,6 @@ export const DashboardPage = () => {
                   ></i>
                 )}
                 onRowHover={(user) => setHoveredUserId(user.id)}
-                /*rowKey="id"*/
               />
             </>
           )}

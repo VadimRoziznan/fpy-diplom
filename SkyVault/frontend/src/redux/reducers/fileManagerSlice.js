@@ -7,6 +7,7 @@ const initialState = {
   error: null,
 };
 
+/* Управление файлами */
 const fileManagerSlice = createSlice({
   name: "files",
   initialState,
@@ -32,7 +33,6 @@ const fileManagerSlice = createSlice({
       state.isLoading = false;
       state.deleteStatus = "succeeded";
       state.data = action.payload;
-      /*state.data = state.data.filter((file) => file.id !== action.payload); // Удаляем файл из списка*/
     },
     deleteFileFailure: (state, action) => {
       state.isLoading = false;
@@ -77,6 +77,9 @@ const fileManagerSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    resetSuccessMessage: (state) => {
+      state.successMessage = "";
+    },
     changeFileCommentRequest: (state) => {
       state.isLoading = true;
     },
@@ -85,6 +88,17 @@ const fileManagerSlice = createSlice({
       state.successMessage = "Комментарий успешно изменен";
     },
     changeFileCommentFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    shareLinkRequest: (state) => {
+      state.isLoading = true;
+    },
+    shareLinkSuccess: (state, action) => {
+      state.isLoading = false;
+      state.link = action.payload;
+    },
+    shareLinkFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -108,9 +122,13 @@ export const {
   renameFileRequest,
   renameFileSuccess,
   renameFileFailure,
+  resetSuccessMessage,
   changeFileCommentRequest,
   changeFileCommentSuccess,
   changeFileCommentFailure,
+  shareLinkRequest,
+  shareLinkSuccess,
+  shareLinkFailure,
 } = fileManagerSlice.actions;
 
 export default fileManagerSlice.reducer;

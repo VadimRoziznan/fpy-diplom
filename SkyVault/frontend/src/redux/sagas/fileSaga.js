@@ -1,5 +1,5 @@
 import { takeEvery, put, call } from "redux-saga/effects";
-import { fetchFiles } from "../../api";
+import { fetchFilesApi } from "../../api";
 import {
   fetchFilesRequest,
   fetchFilesSuccess,
@@ -7,11 +7,12 @@ import {
 } from "../reducers/fileManagerSlice";
 import Swal from "sweetalert2";
 
+/* Saga для получения списка файлов */
 export function* fetchFilesSaga(action) {
   try {
-    const userId = action.payload; // Получение userId из действия
-    const data = yield call(fetchFiles, userId);
-    yield put(fetchFilesSuccess(data));
+    const userId = action.payload;
+    const data = yield call(fetchFilesApi, userId);
+    yield put(fetchFilesSuccess(data)); // Сохраняем данные в Redux
   } catch (error) {
     yield put(fetchFilesFailure(error.message));
     yield call(Swal.fire, {

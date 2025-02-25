@@ -1,4 +1,3 @@
-// renameFileSaga.js
 import { call, put, takeEvery } from "redux-saga/effects";
 import { changeFileCommentApi } from "../../api";
 import {
@@ -8,6 +7,7 @@ import {
 } from "../reducers/fileManagerSlice";
 import Swal from "sweetalert2";
 
+/* Saga для изменения комментария */
 function* changeFileCommentSaga(action) {
   try {
     const { userId, fileId, newComment } = action.payload;
@@ -17,12 +17,13 @@ function* changeFileCommentSaga(action) {
         "Отсутствуют необходимые данные для изменения комментария",
       );
     }
+    const updatedFile = yield call(changeFileCommentApi, {
+      userId,
+      fileId,
+      newComment,
+    });
 
-    // Вызываем API для переименования файла
-    const updatedFile = yield call(changeFileCommentApi, { userId, fileId, newComment });
-
-    // Диспатчим успех с результатом
-    yield put(changeFileCommentSuccess(updatedFile));
+    yield put(changeFileCommentSuccess(updatedFile)); // Сохраняем данные в Redux
     yield Swal.fire({
       icon: "success",
       title: "Комментарий изменен!",
@@ -34,7 +35,6 @@ function* changeFileCommentSaga(action) {
   }
 }
 
-// Вотчер для переименования файла
 export function* watchChangeFileCommentSaga() {
   yield takeEvery(changeFileCommentRequest.type, changeFileCommentSaga);
 }

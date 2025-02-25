@@ -1,8 +1,6 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
-import "./Footer.css";
 
+/* Компонент футера */
 export const Footer = () => {
   return (
     <footer className="bg-dark text-white py-4">

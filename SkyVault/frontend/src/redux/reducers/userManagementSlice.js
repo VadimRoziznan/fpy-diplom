@@ -6,6 +6,7 @@ const initialState = {
   error: null,
 };
 
+/* Получение списка пользователей и удаление */
 const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -23,14 +24,14 @@ const usersSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    deleteUsersRequest: (state) => {
+    deleteUserRequest: (state) => {
       state.isLoading = true;
     },
-    deleteUsersSuccess: (state, action) => {
+    deleteUserSuccess: (state, action) => {
       state.isLoading = false;
-      state.data = state.data.filter((file) => file.fileId !== action.payload); // Удаляем файл из списка
+      state.successMessage = "Пользователь успешно удален";
     },
-    deleteUsersFailure: (state, action) => {
+    deleteUserFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -41,9 +42,9 @@ export const {
   fetchUsersRequest,
   fetchUsersSuccess,
   fetchUsersFailure,
-  deleteUsersRequest,
-  deleteUsersSuccess,
-  deleteUsersFailure,
+  deleteUserRequest,
+  deleteUserSuccess,
+  deleteUserFailure,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

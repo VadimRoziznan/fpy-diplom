@@ -4,12 +4,12 @@ import usersSlice from "./userManagementSlice";
 import registerSlice from "./registerSlice";
 import fileManagerSlice from "./fileManagerSlice";
 
+/* Объединение всех редьюсеров */
 const rootReducer = combineReducers({
   login: loginSlice,
-  /*data: fileManagerSlice,*/
   users: usersSlice,
   register: registerSlice,
-  fileManager: fileManagerSlice, // Подключаем редьюсер
+  fileManager: fileManagerSlice,
 });
 
 export default rootReducer;

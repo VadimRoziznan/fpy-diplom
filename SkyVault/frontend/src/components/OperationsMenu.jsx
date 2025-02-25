@@ -1,51 +1,47 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   deleteFileRequest,
   downloadFileRequest,
+  shareLinkRequest,
 } from "../redux/reducers/fileManagerSlice";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
 import "./OperationsMenu.css";
 import { FileUpload } from "./FileUpload";
 import {
   uploadFileSuccess,
   uploadFileFailure,
-  fetchFilesRequest,
-  deleteFileSuccess,
   deleteFileFailure,
 } from "../redux/reducers/fileManagerSlice";
+import { deleteUserRequest, deleteUserFailure } from "../redux/reducers/userManagementSlice";
 import { uploadFileApi } from "../api";
 import { getFileType } from "../utils/utils";
 import Swal from "sweetalert2";
 import FileRename from "./FileRename";
 import FileChangeComment from "./FileChangeComment";
-import { debounce } from 'lodash';
 
+/* Компонент меню операций */
 export const OperationsMenu = ({
   userId,
   checkedFiles,
   setCheckedFiles,
   sectionsList,
-  onRefreshData,
+  userDelete=false,
+  allowedMenuItems=["all"],
 }) => {
-  /*const userId = useSelector((state) => state.login.user?.id);*/
   const [sectionType, setSectionType] = useState("");
-  const [updateFiles, setUpdateFiles] = useState(false);
-  /*const { data } = useSelector((state) => state.data);*/
   const dispatch = useDispatch();
 
-  /*useEffect(() => {
-    if (updateFiles) {
-      dispatch(fetchFilesRequest(userId));
-      setUpdateFiles(false);
-    }
-  }, [updateFiles, userId, dispatch]);*/
+  /* Фильтрация меню, в случае если allowedMenuItems равен "all" используется все меню */
+  if (!allowedMenuItems.includes("all")) {
+    sectionsList = sectionsList.filter((section) => allowedMenuItems.includes(section.type));
+  }
 
-  const handleClick = (actionType, FileIds, userId) => {
+  /* Обработчик нажатия на кнопку */
+  const handleClick = (actionType, listWithIds, userId) => {
     if (
-      ["delete", "download", "rename", "comment", "share-link"].includes(actionType) &&
+      ["delete", "download", "rename", "comment", "share-link"].includes(
+        actionType,
+      ) &&
       checkedFiles.length === 0
     ) {
       Swal.fire({
@@ -55,65 +51,66 @@ export const OperationsMenu = ({
       });
       return;
     }
-    setSectionType(actionType);
 
-    if (actionType === "delete") {
-      for (const fileId of FileIds) {
+    setSectionType(actionType); // Открытие модального окна
+
+    /* Удаление файлов */
+    if (actionType === "delete" && !userDelete) {
+      for (const fileIdToDelete of listWithIds) {
         try {
-          dispatch(deleteFileRequest({ userId, fileId }));
-          dispatch(deleteFileSuccess(fileId)); // Удаление из Redux
+          dispatch(deleteFileRequest({ userId, fileIdToDelete }));
         } catch (error) {
-          dispatch(deleteFileFailure(error.message)); // Логируем ошибку
-          console.error(`Ошибка при удалении файла ${fileId}:`, error);
+          dispatch(deleteFileFailure(error.message));
+          console.error(`Ошибка при удалении файла ${fileIdToDelete}:`, error);
         }
       }
-      setUpdateFiles(true);
+    }
+    /* Удаление пользователей */
+    if (actionType === "delete" && userDelete) {
+      const listUsersIdToDelete = listWithIds // Список пользователей для удаления
+      for (const userIdToDelete of listUsersIdToDelete) {
+        try {
+          dispatch(deleteUserRequest({ userId, userIdToDelete }));
+        } catch (error) {
+          dispatch(deleteUserFailure(error.message));
+          console.error(`Ошибка при удалении пользователя с id №${userIdToDelete}:`, error);
+        }
+      }
     }
 
+    /* Скачивание файлов на локальный компьютер */
     if (actionType === "download") {
-      dispatch(downloadFileRequest(FileIds));
-      setUpdateFiles(true);
-      onRefreshData();
+      dispatch(downloadFileRequest(listWithIds));
     }
 
-    if (actionType === "upload") {
-      setSectionType("upload");
-    }
-
-    if (actionType === "comment") {
-      setSectionType("comment");
-    }
-
-    if (actionType === "rename") {
-      setSectionType("rename");
+    /* Поделиться ссылкой */
+    if (actionType === "share-link") {
+      dispatch(shareLinkRequest(listWithIds[0]));
     }
   };
 
+  /* Обработчик загрузки файлов на сервер */
   const handleUpload = async (file, comment, userId) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("comment", comment);
       formData.append("userId", userId);
-      formData.append("type", getFileType(file.name)); // Доработать определение типа
+      formData.append("type", getFileType(file.name));
       formData.append("file_name", file.name);
 
       // Отправляем файл напрямую через API
       const response = await uploadFileApi(formData);
 
-      // Диспатчим только результат загрузки (например, успешный ответ от сервера)
+      // Диспатчим результат загрузки
       dispatch(uploadFileSuccess(response));
-      // Показываем сообщение об успешной загрузке
       Swal.fire({
         icon: "success",
         title: "Файл успешно загружен!",
         text: "Ваш файл был успешно загружен на сервер.",
       });
     } catch (error) {
-      // Диспатчим ошибку в Redux
       dispatch(uploadFileFailure(error.message));
-
-      // Показываем ошибку пользователю через Swal
       Swal.fire({
         icon: "error",
         title: "Ошибка загрузки файла",
@@ -123,11 +120,10 @@ export const OperationsMenu = ({
     }
   };
 
+  /* Обработчик закрытия модального окна */
   const handleCloseModal = () => {
     setSectionType(""); // Закрыть модальное окно
     setCheckedFiles([]); // Очистка выбранных файлов
-    setUpdateFiles(true); // Обновление списка файлов
-    onRefreshData(); // Обновление списка файлов
   };
 
   return (
@@ -142,7 +138,7 @@ export const OperationsMenu = ({
                   <i
                     className={`px-4 fs-4 title-icon ${section.icon}`}
                     role="button" // Указываем, что элемент работает как кнопка
-                    tabIndex={0} // Делает элемент фокусируемым
+                    tabIndex={0}
                     title={section.title}
                     onClick={() =>
                       handleClick(section.type, checkedFiles, userId)
@@ -162,6 +158,7 @@ export const OperationsMenu = ({
           onClose={handleCloseModal}
         />
       )}
+      {/* Показываем модальное окно, если выбрано действие "rename" */}
       {sectionType === "rename" && (
         <FileRename
           userId={userId}
@@ -169,6 +166,7 @@ export const OperationsMenu = ({
           onClose={handleCloseModal}
         />
       )}
+      {/* Показываем модальное окно, если выбрано действие "comment" */}
       {sectionType === "comment" && (
         <FileChangeComment
           userId={userId}

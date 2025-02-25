@@ -1,0 +1,51 @@
+version: '3.8'
+
+networks:
+  db_net:
+  backend:
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=SkyVault.settings
+      - DATABASE_URL=postgres://${USER_PSQL}:${PASSWORD_PSQL}@db:5432/${NAME}
+    depends_on:
+      - db
+    networks:
+      - db_net
+      - backend
+    command: ["sh", "-c", "sleep 30 && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    networks:
+      - backend
+
+  db:
+    image: postgres:16.3
+    ports:
+      - "5555:5432"
+    environment:
+      POSTGRES_DB: ${NAME}
+      POSTGRES_USER: ${USER_PSQL}
+      POSTGRES_PASSWORD: ${PASSWORD_PSQL}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - db_net
+
+volumes:
+  postgres_data:

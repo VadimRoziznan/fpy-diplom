@@ -2,35 +2,26 @@ import React from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/reducers/loginSlice";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
-
 import "./MainMenu.css";
 
+/* Компонент главного меню */
 export const MainMenu = () => {
-  // Получаем статус авторизации из Redux
   const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
   const userId = useSelector((state) => state.login.user?.id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  /* Обработчик выхода */
   const handleLogout = () => {
     dispatch(logout());
     navigate("/");
   };
 
+  /* Главное меню */
   const navLinks = [
-    { to: "/", title: "SkyVault вторая память", protected: false },
-    {
-      to: userId ? `/storage/${userId}` : "#",
-      title: "Хранилище",
-      protected: true,
-    },
-    {
-      to: userId ? `/dashboard/${userId}` : "#",
-      title: "Панель Администратора",
-      protected: true,
-    },
+    { title: "SkyVault вторая память", to: "/", protected: false },
+    { title: "Хранилище", to: userId ? `/storage/${userId}` : "#", protected: true },
+    { title: "Панель Администратора", to: userId ? `/dashboard/${userId}` : "#", protected: true },
   ];
 
   return (

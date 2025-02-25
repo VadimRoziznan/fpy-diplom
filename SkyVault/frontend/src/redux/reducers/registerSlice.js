@@ -7,6 +7,7 @@ const initialState = {
   isAuthenticated: false,
 };
 
+/* Регистрация */
 const registerSlice = createSlice({
   name: "user",
   initialState,

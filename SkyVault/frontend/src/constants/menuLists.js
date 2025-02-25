@@ -1,3 +1,4 @@
+/* Меню для секции рбота с файлами */
 export const sectionsList = [
   { title: "Загрузить новый файл", type: "upload", icon: "bi bi-upload" },
   { title: "Скачать", type: "download", icon: "bi bi-download" },
@@ -7,6 +8,7 @@ export const sectionsList = [
   { title: "Поделиться ссылкой", type: "share-link", icon: "bi bi-link-45deg" },
 ];
 
+/* Заголовки таблицы списка пользователей */
 export const usersHeaders = [
   { name: "Имя пользователя", key: "first_name" },
   { name: "Логин пользователя", key: "username" },
@@ -16,6 +18,7 @@ export const usersHeaders = [
   { name: "Администратор", key: "is_staff" },
 ];
 
+/* Заголовки таблицы списка файлов */
 export const filesHeaders = [
   { name: "Имя файла", key: "file_name" },
   { name: "Комментарий", key: "comment" },
@@ -24,6 +27,7 @@ export const filesHeaders = [
   { name: "Дата последнего скачивания", key: "last_download_date" },
 ];
 
+/* Меню для администратора */
 export const adminMenuList = [
   { title: "Пользователи", type: "users", icon: "bi bi-people" },
   { title: "Документация", type: "documentation", icon: "bi bi-journal-text" },
@@ -32,6 +36,7 @@ export const adminMenuList = [
   { title: "Логи событий", type: "logs", icon: "bi bi-file-earmark-text" },
 ];
 
+/* Меню для выбора категорий */
 export const storageMenuList = [
   { title: "Все файлы", type: "all", icon: "bi bi-list" },
   { title: "Фото", type: "photos", icon: "bi bi-images" },
@@ -39,3 +44,4 @@ export const storageMenuList = [
   { title: "Видео", type: "videos", icon: "bi bi-film" },
   { title: "Музыка", type: "music", icon: "bi bi-music-note-beamed" },
 ];
+
