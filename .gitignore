@@ -22,6 +22,7 @@ Thumbs.db
 venv/
 env/
 ENV/
+.venv/
 .env/
 virtualenv/
 *.egg-info/
