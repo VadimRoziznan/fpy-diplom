@@ -1,4 +1,3 @@
-// renameFileSaga.js
 import { call, put, takeEvery } from "redux-saga/effects";
 import { renameFileApi } from "../../api";
 import {
@@ -8,6 +7,7 @@ import {
 } from "../reducers/fileManagerSlice";
 import Swal from "sweetalert2";
 
+/* Saga для переименования файлов */
 function* renameFileSaga(action) {
   try {
     const { userId, fileId, newName } = action.payload;
@@ -17,12 +17,9 @@ function* renameFileSaga(action) {
         "Отсутствуют необходимые данные для переименования файла",
       );
     }
-
-    // Вызываем API для переименования файла
     const updatedFile = yield call(renameFileApi, { userId, fileId, newName });
 
-    // Диспатчим успех с результатом
-    yield put(renameFileSuccess(updatedFile));
+    yield put(renameFileSuccess(updatedFile)); // Сохраняем данные в Redux
     yield Swal.fire({
       icon: "success",
       title: "Файл переименован!",
@@ -34,7 +31,6 @@ function* renameFileSaga(action) {
   }
 }
 
-// Вотчер для переименования файла
 export function* watchRenameFileSaga() {
   yield takeEvery(renameFileRequest.type, renameFileSaga);
 }

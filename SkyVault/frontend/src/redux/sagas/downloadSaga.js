@@ -5,15 +5,13 @@ import {
   downloadFileFailure,
 } from "../reducers/fileManagerSlice";
 import Swal from "sweetalert2";
-import { downloadFile } from "../../api";
+import { downloadFileApi } from "../../api";
 
-/**
- * Сага для скачивания файлов
- */
+/* Saga для скачивания файлов */
 export function* downloadFileSaga(action) {
   try {
-    const fileIds = action.payload; // Получаем массив fileIds
-    const filesLinkArray = yield call(downloadFile, fileIds); // Запрашиваем ссылки у сервера
+    const fileIds = action.payload;
+    const filesLinkArray = yield call(downloadFileApi, fileIds);
 
     if (!filesLinkArray || filesLinkArray.length === 0) {
       throw new Error("Сервер не вернул ссылки для загрузки");
@@ -38,16 +36,14 @@ export function* downloadFileSaga(action) {
   }
 }
 
-/**
- * Запускает скачивание файла в новом окне (чтобы избежать блокировки браузером)
- */
+/* Запускает скачивание файла в новом окне (чтобы избежать блокировки браузером) */
 async function downloadFileInBrowser(fileUrl, fileName) {
   try {
     const response = await fetch(fileUrl, { mode: "cors" }); // Загружаем файл
     if (!response.ok)
       throw new Error(`Ошибка загрузки файла: ${response.statusText}`);
 
-    const blob = await response.blob(); // Преобразуем в Blob
+    const blob = await response.blob(); // Преобразуем в Blob для скачивания
     const blobUrl = window.URL.createObjectURL(blob); // Создаем URL для Blob
 
     const link = document.createElement("a");

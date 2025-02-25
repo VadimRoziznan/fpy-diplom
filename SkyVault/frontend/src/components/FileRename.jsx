@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   renameFileRequest,
-  renameFileSuccess,
   renameFileFailure,
 } from "../redux/reducers/fileManagerSlice";
 import Swal from "sweetalert2";
 
+/* Компонент для переименования файлов */
 const FileRename = ({ fileId, userId, onClose }) => {
   const [newName, setNewName] = useState("");
   const dispatch = useDispatch();
 
+  /* Функция для переименования файлов */
   const handleRename = async () => {
     try {
-      dispatch(renameFileRequest({ userId, fileId, newName }));
-
-      onClose(); // Закрыть модальное окно
+      dispatch(renameFileRequest({ userId, fileId, newName }))
+      onClose();
     } catch (error) {
       dispatch(renameFileFailure(error.message));
       Swal.fire({

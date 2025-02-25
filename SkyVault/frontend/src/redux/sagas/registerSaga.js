@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { fetchRegister } from "../../api";
+import { fetchRegisterApi } from "../../api";
 import {
   fetchRegisterRequest,
   fetchRegisterSuccess,
@@ -7,18 +7,17 @@ import {
 } from "../reducers/registerSlice";
 import Swal from "sweetalert2";
 
+/* Saga для регистрации */
 export function* fetchRegisterSaga(action) {
   try {
-    const { data, status } = yield call(fetchRegister, action.payload);
-    console.log("status", status);
-    console.log("data", data);
+    const { data, status } = yield call(fetchRegisterApi, action.payload);
     if (status === 201) {
       yield Swal.fire({
         icon: "success",
         title: "Регистрация прошла успешно!",
         text: "Вы успешно зарегистрировались!",
       });
-      yield put(fetchRegisterSuccess(data));
+      yield put(fetchRegisterSuccess(data)); // Сохраняем данные в Redux
     } else {
       yield Swal.fire({
         icon: "error",

@@ -3,36 +3,34 @@
   width: 100%;
   padding: 10px;
   margin: 10px 0;
-
   border-radius: 1px;
-
   transition: background-color 0.3s;
 }
 
 .file-row.hovered {
-  background-color: #d3d3d3; /* светло-серый цвет при наведении или активации чекбокса */
+  background-color: #d3d3d3;
 }
 
 .file-column {
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: start; /* если нужно центрировать по горизонтали */
+  justify-content: start;
 }
 
 .file-checkbox {
-  justify-content: flex-start; /* чтобы чекбокс был слева */
+  justify-content: flex-start;
   max-width: 50px;
-}
-
-.border-bottom {
-  border-bottom: 1px solid #ccc;
 }
 
 .file-header-sticky {
   position: sticky;
   top: 3.4rem; /* Задает расстояние от верхней части окна, на котором элемент будет "липнуть" */
   z-index: 10; /* Устанавливает z-index, чтобы меню было над другими элементами */
-  background-color: white; /* Убедитесь, что фон установлен, чтобы перекрыть элементы под ним */
-  padding: 15px; /* Установите отступы по своему усмотрению */
+  background-color: white;
+  padding: 15px;
+}
+
+.border-bottom {
+  border-bottom: 1px solid #ccc;
 }

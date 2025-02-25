@@ -7,6 +7,7 @@ const initialState = {
   isAuthenticated: false,
 };
 
+/* Авторизация при входе */
 const loginSlice = createSlice({
   name: "user",
   initialState,
@@ -28,7 +29,6 @@ const loginSlice = createSlice({
     },
     logout: (state) => {
       state.user = null;
-      /*state.login = false;*/
       state.isAuthenticated = false; // Сбрасываем авторизацию при выходе
     },
   },

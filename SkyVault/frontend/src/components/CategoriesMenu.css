@@ -1,7 +1,6 @@
-/* Обычные ссылки */
 .navbar .nav-link {
   text-decoration: none;
-  color: #000; /* Черный текст по умолчанию */
+  color: #000;
   padding: 10px 15px;
   transition:
     background-color 0.3s ease,
@@ -11,9 +10,9 @@
 
 /* Активная ссылка с овальной подсветкой */
 .navbar .nav-link.active {
-  background-color: #0d6efd; /* Синий фон */
-  color: #fff !important; /* Белый текст, !important для приоритета */
-  border-radius: 50px; /* Скругленные края для овала */
+  background-color: #0d6efd;
+  color: #fff !important;
+  border-radius: 50px;
   padding-right: 1em;
   padding-left: 1em;
   width: 100%;
@@ -21,12 +20,12 @@
 
 /* Эффект при наведении */
 .navbar .nav-link:hover {
-  background-color: #f0f0f0; /* Светло-серый фон при наведении */
+  background-color: #f0f0f0; 
   color: #000;
   width: 100%;
 }
 
-/* Эффект при наведении для активных ссылок (не изменяется) */
+/* Эффект при наведении для активных ссылок */
 .navbar .nav-link.active:hover {
   background-color: #0d6efd; /* Остается синим */
   color: #fff !important; /* Остается белым */
@@ -34,11 +33,11 @@
 
 /* Вертикальное меню */
 .navbar-nav.flex-column {
-  width: 100%; /* Занимает всю ширину контейнера */
-  padding-left: 0; /* Убираем отступы */
-  list-style: none; /* Убираем маркеры списка */
+  width: 100%;
+  padding-left: 0;
+  list-style: none;
 }
 
 .navbar-cat-menu {
-  background-color: #f8f9fa; /* Светло-серый фон */
+  background-color: #f8f9fa; 
 }

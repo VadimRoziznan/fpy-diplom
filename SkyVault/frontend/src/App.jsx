@@ -1,7 +1,5 @@
-import React, { useEffect } from "react";
-import Cookies from "js-cookie";
+import React from "react";
 import {
-  unstable_HistoryRouter as HistoryRouter,
   Routes,
   Route,
   BrowserRouter,
@@ -14,10 +12,9 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { StoragePage } from "./pages/StoragePage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { NotFound } from "./pages/NotFoundPages";
-import store from "./redux/store";
 import { PrivateRoute } from "./utils/PrivateRoute";
 import { UserFilesPage } from "./pages/UserFilesPage";
-
+import store from "./redux/store";
 import "./App.css";
 
 function App() {

@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { fetchLogin } from "../../api";
+import { fetchLoginApi } from "../../api";
 import {
   fetchLoginRequest,
   fetchLoginSuccess,
@@ -7,16 +7,17 @@ import {
 } from "../reducers/loginSlice";
 import Swal from "sweetalert2";
 
+/* Saga для входа в систему */
 export function* fetchLoginSaga(action) {
   try {
-    const { data, status } = yield call(fetchLogin, action.payload);
+    const { data, status } = yield call(fetchLoginApi, action.payload);
     if (status === 200) {
       yield Swal.fire({
         icon: "success",
         title: "Успешный вход!",
         text: "Вы успешно вошли в систему!",
       });
-      yield put(fetchLoginSuccess(data));
+      yield put(fetchLoginSuccess(data)); // Сохраняем данные в Redux
     } else {
       yield Swal.fire({
         icon: "error",

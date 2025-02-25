@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchRegisterRequest,
-  resetUser,
-} from "../redux/reducers/registerSlice";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import { fetchRegisterRequest } from "../redux/reducers/registerSlice";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { validatePassword, validateLogin } from "../utils/utils";
 import AuthForm from "../components/AuthForm";
 
+/* Страница регистрации */
 export const RegisterPage = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -18,7 +14,6 @@ export const RegisterPage = () => {
     email: "",
     password: "",
   });
-
   const [loginError, setLoginError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,6 +21,7 @@ export const RegisterPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  /* Обработчик изменения полей формы */
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "password") {
@@ -52,6 +48,7 @@ export const RegisterPage = () => {
     });
   };
 
+  /* Обработчик отправки формы */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -64,19 +61,17 @@ export const RegisterPage = () => {
       return;
     }
     dispatch(fetchRegisterRequest(formData));
-    console.log("userId", userId);
   };
 
+  /* Обработчик переключения видимости пароля */
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  /* Проверяем, авторизован ли пользователь */
   useEffect(() => {
-    console.log("userId", userId);
     if (userId) {
       navigate("/login");
-      /*navigate(`/storage/${userId}`);
-      dispatch(resetUser()); // Сброс userId*/
     }
   }, [userId, navigate, dispatch]);
 

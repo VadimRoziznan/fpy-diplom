@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Импортируем useNavigate
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
+import { useNavigate } from "react-router-dom";
 import AuthForm from "../components/AuthForm";
 import { fetchLoginRequest } from "../redux/reducers/loginSlice";
 import { Loading } from "../components/Loading";
 
+/* Страница авторизации */
 export const LoginPage = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Инициализируем useNavigate
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const loading = useSelector((state) => state.login.isLoading);
   const userId = useSelector((state) => state.login.user?.id);
 
+  /* Обработчик изменения полей формы */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -26,17 +26,20 @@ export const LoginPage = () => {
     });
   };
 
+  /* Обработчик отправки формы */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(fetchLoginRequest(formData)); // Отправляем данные на авторизацию
+    dispatch(fetchLoginRequest(formData));
   };
 
+  /* Перенаправление на страницу хранилища после успешной авторизации */
   useEffect(() => {
     if (userId) {
       navigate(`/storage/${userId}`);
     }
   }, [userId, navigate]);
 
+  /* Переключение видимости пароля */
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -47,10 +50,8 @@ export const LoginPage = () => {
       style={{ paddingTop: "150px", paddingBottom: "50px", minHeight: "100vh" }}
     >
       {loading ? (
-        // Блок загрузки
         <Loading />
       ) : (
-        // Основной блок с формой
         <div>
           <h1 className="text-center">Вход</h1>
           <div className="row justify-content-center">

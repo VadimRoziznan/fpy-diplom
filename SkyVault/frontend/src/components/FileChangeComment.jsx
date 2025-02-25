@@ -2,23 +2,22 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
   changeFileCommentRequest,
-  changeFileCommentSuccess,
   changeFileCommentFailure,
 } from "../redux/reducers/fileManagerSlice";
 import Swal from "sweetalert2";
 
+/* Компонент для изменения комментария */
 const FileChangeComment = ({ fileId, userId, onClose }) => {
   const [newComment, setComment] = useState("");
   const dispatch = useDispatch();
 
+  /* Функция для изменения комментария */
   const fileAddComment = async () => {
     try {
       dispatch(changeFileCommentRequest({ userId, fileId, newComment }));
-
       onClose(); // Закрыть модальное окно
     } catch (error) {
       dispatch(changeFileCommentFailure(error.message));
-
       Swal.fire({
         icon: "error",
         title: "Ошибка изменения комментария",
@@ -56,7 +55,7 @@ const FileChangeComment = ({ fileId, userId, onClose }) => {
               className="btn btn-primary"
               onClick={fileAddComment}
             >
-              Добавить
+              Изменить
             </button>
           </div>
         </div>

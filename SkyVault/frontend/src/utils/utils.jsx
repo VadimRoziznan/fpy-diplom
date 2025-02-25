@@ -1,14 +1,17 @@
+/* Проверка пароля */
 export const validatePassword = (password) => {
   const regex =
     /(?=.*[0-9])(?=.*[!@#$%^&*></?}~`'"-+,.:;])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g;
   return regex.test(password);
 };
 
+/* Проверка логина */
 export const validateLogin = (password) => {
   const regex = /^[A-Z][0-9a-zA-Z]{3,19}$/;
   return regex.test(password);
 };
 
+/* Функция для генерации иконок по расширению файла */
 export const GenerateIconWithFileName = ({ fileName, link }) => {
   const fileIcons = {
     // Документы
@@ -77,6 +80,7 @@ export const GenerateIconWithFileName = ({ fileName, link }) => {
   );
 };
 
+/* Функция для определения типа файла */
 export function getFileType(fileName) {
   // Список расширений для каждого типа файлов
   const fileTypes = {
