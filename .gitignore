@@ -354,7 +354,7 @@ debug/
 !.env.example
 
 SkyVault/backend/SkyVault/.env
-SkyVault/backend/SkyVault/media/
+SkyVault/backend/SkyVault/media/*
 
 SkyVault/backend/.venv/
 SkyVault/backend/.idea/
