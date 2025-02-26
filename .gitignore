@@ -352,3 +352,6 @@ debug/
 !.gitattributes
 !.gitkeep
 !.env.example
+
+SkyVault/backend/SkyVault/.env
+
