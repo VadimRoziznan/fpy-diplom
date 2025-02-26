@@ -19,6 +19,9 @@ Thumbs.db
 *.local
 
 # Python/Django
+.venv/
+.env
+.idea/
 venv/
 env/
 ENV/
