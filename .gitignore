@@ -51,7 +51,6 @@ cover/
 *.sqlite3
 db.sqlite3
 migrations/
-media/
 staticfiles/
 *.backup
 *.sql
