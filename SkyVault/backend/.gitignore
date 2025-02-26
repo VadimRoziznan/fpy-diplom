@@ -47,7 +47,7 @@ cover/
 *.sqlite3
 db.sqlite3
 migrations/
-media/
+media/*
 staticfiles/
 *.backup
 *.sql
@@ -346,5 +346,5 @@ debug/
 # Исключения для конкретных файлов
 !.gitignore
 !.gitattributes
-!.gitkeep
+
 !.env.example
