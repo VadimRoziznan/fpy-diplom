@@ -36,7 +36,8 @@ cp .env_example .env
    
 В корневой папке проекта выполните следующую команду для запуска контейнеров.
 ```bash
-docker-compose up --build
+docker-compose build --no-cache frontend
+docker-compose up
 ```
 Эта команда установит все необходимые зависимости и запустит контейнеры с приложением.
 
