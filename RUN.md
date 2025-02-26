@@ -36,10 +36,32 @@ cp .env_example .env
    
 В корневой папке проекта выполните следующую команду для запуска контейнеров.
 ```bash
-docker-compose build --no-cache frontend
+docker-compose build --no-cache
 docker-compose up
 ```
 Эта команда установит все необходимые зависимости и запустит контейнеры с приложением.
 
 После успешного запуска контейнеров приложение будет доступно по адресу: http://localhost:3000
+
+4. **Инициализация пользователей**
+
+При первом запуске приложения автоматически создаются следующие пользователи:
+
+- **Суперпользователь**:
+  - Username: `Admin`
+  - Email: `admin@mail.ru`
+  - First name: `Админ`
+  - Password: `Rfa233Rfa233!`
+- **Обычный пользователь 1**:
+  - Username: `User1`
+  - Email: `user1@example.com`
+  - First name: `Пользователь1`
+  - Password: `User1Password123!`
+- **Обычный пользователь 2**:
+  - Username: `User2`
+  - Email: `user2@example.com`
+  - First name: `Пользователь2`
+  - Password: `User2Password123!`
+
+Пользователи создаются с использованием сигнала `post_migrate` в Django.
 
