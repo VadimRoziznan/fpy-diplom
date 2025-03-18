@@ -6,7 +6,12 @@ WORKDIR /app
 
 # Копируем файлы зависимостей и устанавливаем их
 COPY package.json package-lock.json ./
-RUN npm install
+
+# Устанавливаем зависимости с очисткой кэша npm
+RUN npm cache clean --force && npm install --verbose
+
+# Проверяем, что react-scripts установлен (для отладки)
+RUN npm list react-scripts || echo "react-scripts not found"
 
 # Копируем исходный код проекта
 COPY . .

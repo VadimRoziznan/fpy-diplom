@@ -8,6 +8,7 @@ import "./MainMenu.css";
 export const MainMenu = () => {
   const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
   const userId = useSelector((state) => state.login.user?.id);
+  const user = useSelector((state) => state.login?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,11 +18,13 @@ export const MainMenu = () => {
     navigate("/");
   };
 
+  console.log("user", user);
+
   /* Главное меню */
   const navLinks = [
     { title: "SkyVault вторая память", to: "/", protected: false },
-    { title: "Хранилище", to: userId ? `/storage/${userId}` : "#", protected: true },
-    { title: "Панель Администратора", to: userId ? `/dashboard/${userId}` : "#", protected: true },
+    { title: "Хранилище", to: user?.id ? `/storage/${user?.id}` : "#", protected: true },
+    { title: "Панель Администратора", to: user?.id ? `/dashboard/${user?.id}` : "#", protected: true, adminOnly: true },
   ];
 
   return (
@@ -44,7 +47,16 @@ export const MainMenu = () => {
         <div className="collapse navbar-collapse" id="navbarMain">
           <ul className="navbar-nav me-auto">
             {navLinks
-              .filter((link) => !link.protected || isAuthenticated)
+              .filter((link) => {
+                /* Если маршрут не защищён, показываем его всегда */
+                if (!link.protected) return true;
+                /* Если пользователь не авторизован, скрываем защищённые маршруты */
+                if (!isAuthenticated) return false;
+                /* Если маршрут только для администраторов, проверяем роль */
+                if (link.adminOnly) return user?.role === true;
+                /* Для всех остальных защищённых маршрутов достаточно авторизации */
+                return true;
+              })
               .map((link, index) => (
                 <li key={index} className="nav-item me-4">
                   <NavLink
@@ -60,6 +72,15 @@ export const MainMenu = () => {
           </ul>
           <ul className="navbar-nav ms-auto ">
             {isAuthenticated ? (
+              <>
+                <li className="nav-item">
+                <span
+                  className="nav-link"
+                >
+                  {user.first_name}
+                </span>
+              </li>
+              <span className="divider"></span>
               <li className="nav-item">
                 <button
                   className="btn btn-link nav-link"
@@ -68,6 +89,7 @@ export const MainMenu = () => {
                   Выход
                 </button>
               </li>
+              </>
             ) : (
               <>
                 <li className="nav-item me-2">

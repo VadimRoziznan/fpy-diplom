@@ -90,8 +90,9 @@ INSTALLED_APPS = [
 
     "SkyVault",
     "api",
-    'users',
+    #'users',
     "vault",
+    'users.apps.UsersConfig',
 
     # Django REST Framework
     "rest_framework",

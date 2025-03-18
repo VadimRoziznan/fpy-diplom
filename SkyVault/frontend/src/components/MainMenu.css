@@ -8,3 +8,9 @@
   border-radius: 50%;
   object-fit: contain; /* Сохраняет пропорции внутри заданных размеров */
 }
+
+.divider {
+  width: 1px; /* Толщина черты */
+  background-color: black; /* Цвет черты */
+  
+}

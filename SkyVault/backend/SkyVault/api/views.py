@@ -37,11 +37,10 @@ class LoginView(APIView):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)  # Авторизация пользователя через Django
-
-            # Формирование ответа
             response_data = {
                 "id": user.id,
-                "role": user.is_superuser,
+                "role": user.is_staff,
+                "first_name": user.first_name,
             }
             return Response(response_data)
 
