@@ -1,24 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../redux/reducers/loginSlice";
+import { logout, resetLogoutSuccess } from "../redux/reducers/loginSlice";
 import "./MainMenu.css";
 
 /* Компонент главного меню */
 export const MainMenu = () => {
   const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
+  const isLogoutSuccess = useSelector((state) => state.login.isLogoutSuccess);
   const userId = useSelector((state) => state.login.user?.id);
   const user = useSelector((state) => state.login?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoggingOut, setIsLoggingOut] = useState(false); // Флаг для предотвращения повторных кликов
 
   /* Обработчик выхода */
   const handleLogout = () => {
-    dispatch(logout());
-    navigate("/");
+    if (!isLoggingOut && isAuthenticated) { // Добавляем проверку isAuthenticated
+      console.log("Dispatching logout");
+      setIsLoggingOut(true); // Устанавливаем флаг, чтобы предотвратить повторные клики
+      dispatch(logout());
+    }
   };
 
-  console.log("user", user);
+  // Перенаправление после успешного выхода
+  useEffect(() => {
+    if (isLogoutSuccess) {
+      console.log("Logout successful, redirecting to /login");
+      navigate("/login", { replace: true }); // Используем replace для предотвращения возврата назад
+      dispatch(resetLogoutSuccess()); // Сбрасываем флаг
+      setIsLoggingOut(false); // Сбрасываем флаг после перенаправления
+    }
+  }, [isLogoutSuccess, navigate, dispatch]);
+
 
   /* Главное меню */
   const navLinks = [
@@ -31,7 +45,9 @@ export const MainMenu = () => {
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          <img src="/img/header-logo.jpg?v=1" alt="SkyVault" />
+          <img 
+            src={`${process.env.PUBLIC_URL}/img/header-logo.jpg?v=1`}
+            alt="SkyVault" />
         </Link>
         <button
           className="navbar-toggler"

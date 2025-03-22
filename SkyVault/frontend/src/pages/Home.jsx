@@ -34,7 +34,7 @@ export const Home = () => {
                 <div className="col">
                   <Link to="https://www.apple.com/app-store/">
                     <img
-                      src="img/download-appstore.svg?v=1"
+                      src={`${process.env.PUBLIC_URL}/img/download-appstore.svg?v=1`}
                       alt="AppStore"
                       className="img-fluid rounded mb-2"
                     />
@@ -44,7 +44,7 @@ export const Home = () => {
                 <div className="col">
                   <Link to="https://play.google.com/store/games?hl=ru&pli=1">
                     <img
-                      src="img/download-google-play.svg?v=1"
+                      src={`${process.env.PUBLIC_URL}/img/download-google-play.svg?v=1`}
                       alt="Google Play"
                       className="img-fluid rounded mb-2"
                     />
@@ -53,7 +53,7 @@ export const Home = () => {
                 <div className="col">
                   <Link to="https://consumer.huawei.com/ru/mobileservices/appgallery/">
                     <img
-                      src="img/download-appgallery.svg?v=1"
+                      src={`${process.env.PUBLIC_URL}/img/download-appgallery.svg?v=1`}
                       alt="AppGallery"
                       className="img-fluid rounded mb-2"
                     />
@@ -63,7 +63,7 @@ export const Home = () => {
             </div>
             <div className="col-md-5">
               <img
-                src="img/hand@2x.webp?v=1"
+                src={`${process.env.PUBLIC_URL}/img/hand@2x.webp?v=1`}
                 alt="hand"
                 className="img-fluid rounded mb-2"
               />
@@ -80,7 +80,7 @@ export const Home = () => {
         <div className="row text-center mb-5 py-5">
           <div className="col-md-4">
             <img
-              src="img/pic-safety.svg?v=1"
+              src={`${process.env.PUBLIC_URL}/img/pic-safety.svg?v=1`}
               alt="pic-safety"
               className="img-fluid rounded mb-2"
             />
@@ -95,7 +95,7 @@ export const Home = () => {
           </div>
           <div className="col-md-4">
             <img
-              src="img/pic-reliably.svg?v=1"
+              src={`${process.env.PUBLIC_URL}/img/pic-reliably.svg?v=1`}
               alt="pic-reliably"
               className="img-fluid rounded mb-2"
             />
@@ -110,7 +110,7 @@ export const Home = () => {
           </div>
           <div className="col-md-4">
             <img
-              src="img/pic-for-all.svg?v=1"
+              src={`${process.env.PUBLIC_URL}/img/pic-for-all.svg?v=1`}
               alt="pic-for-all"
               className="img-fluid rounded mb-2"
             />
@@ -138,7 +138,7 @@ export const Home = () => {
           </div>
           <div className="col-md-4 text-center">
             <img
-              src="img/phone1@2x.webp?v=1"
+              src={`${process.env.PUBLIC_URL}/img/phone1@2x.webp?v=1`}
               alt="phone1"
               className="img-fluid rounded img-size"
             />
@@ -152,7 +152,7 @@ export const Home = () => {
           </div>
           <div className="col-md-6 text-center">
             <img
-              src="img/phone2@2x.webp?v=1"
+              src={`${process.env.PUBLIC_URL}/img/phone2@2x.webp?v=1`}
               alt="phone2"
               className="img-fluid rounded img-size"
             />
@@ -168,7 +168,7 @@ export const Home = () => {
           </div>
           <div className="col-md-4 text-center">
             <img
-              src="img/phone3@2x.webp?v=1"
+              src={`${process.env.PUBLIC_URL}/img/phone3@2x.webp?v=1`}
               alt="phone3"
               className="img-fluid rounded img-size"
             />

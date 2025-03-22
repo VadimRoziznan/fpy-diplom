@@ -33,17 +33,17 @@ DEBUG = os.getenv('DEBUG', False)
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
+    "http://127.0.0.1:3000",
     # Добавьте ваш продакшн-домен здесь
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://127.0.0.1:3000",
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',  # URL вашего фронтенда
-]
+#CORS_ORIGIN_WHITELIST = [
+#   'http://localhost:3000',  # URL вашего фронтенда
+#]
 
 CORS_ALLOW_METHODS = [
     "GET",
@@ -70,11 +70,17 @@ CORS_ALLOW_HEADERS = [
 CORS_ALLOW_CREDENTIALS = True  # Разрешаем передачу cookie
 CSRF_COOKIE_NAME = "csrftoken"  # Имя cookie для CSRF, совпадает с тем, что используется во фронте
 CSRF_COOKIE_HTTPONLY = False  # Разрешаем JavaScript доступ к CSRF-токену
-CSRF_COOKIE_SAMESITE = 'None' # Рекомендуемый режим 'Lax' для защиты CSRF
-CSRF_COOKIE_SECURE = True    # Для локальной разработки (включите True в продакшене с HTTPS)
-SESSION_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SECURE = True
-CSRF_CHECK = False
+CSRF_COOKIE_SAMESITE = 'Lax'  # Для локальной разработки
+CSRF_COOKIE_SECURE = True  # Для локальной разработки (в продакшене True)
+SESSION_COOKIE_SAMESITE = 'Lax'  # Для локальной разработки
+SESSION_COOKIE_HTTPONLY = True  # Запрещает доступ к куки через JavaScript
+SESSION_COOKIE_SECURE = True  # Для локальной разработки (в продакшене True)
+#CSRF_CHECK = False
+
+
+
+
+#SESSION_COOKIE_SAMESITE = 'Lax'  # Защита от CSRF-атак
 
 
 
@@ -88,6 +94,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+
     "SkyVault",
     "api",
     #'users',
@@ -100,15 +107,25 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
+# MIDDLEWARE = [
+#     'corsheaders.middleware.CorsMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     "django.middleware.security.SecurityMiddleware",
+#     "django.contrib.sessions.middleware.SessionMiddleware",
+#     "django.middleware.common.CommonMiddleware",
+#     "django.contrib.auth.middleware.AuthenticationMiddleware",
+#     "django.contrib.messages.middleware.MessageMiddleware",
+#     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+# ]
 MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = "SkyVault.urls"
@@ -116,9 +133,10 @@ ROOT_URLCONF = "SkyVault.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "front" ],
         "APP_DIRS": True,
         "OPTIONS": {
+            'string_if_invalid': 'INVALID_TEMPLATE',
             "context_processors": [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
@@ -128,6 +146,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
 
 WSGI_APPLICATION = "SkyVault.wsgi.application"
 
@@ -181,7 +202,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+#STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -195,11 +216,34 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # Включаем сессии
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',  # Требуется аутентификация по умолчанию
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',  # Для обработки JSON
+        'rest_framework.parsers.MultiPartParser',  # Для обработки файлов
+        'rest_framework.parsers.FormParser',  # Для обработки форм
+    ],
+    'DEFAULT_RENDERER_CLASSES': [  # Добавь эту секцию
+        'rest_framework.renderers.JSONRenderer',  # Только JSON-ответы
     ],
 }
 
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "front",
+    BASE_DIR / "front" / "static",
+    BASE_DIR / "front" / "img",
+]
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Папка для собранных статических файлов
+
+# Укажи путь к index.html для React
+
+CACHES ={
+    'default': {
+        "BACKEND": 'django.core.cache.backends.dummy.DummyCache',
+    }
+}

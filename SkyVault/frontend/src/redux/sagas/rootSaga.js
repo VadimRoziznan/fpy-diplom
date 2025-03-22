@@ -9,10 +9,12 @@ import { watchRenameFileSaga } from "./renameFileSaga";
 import { watchChangeFileCommentSaga } from "./changeFileCommentSaga";
 import { watchShareLinkSaga } from "./shareLinkSaga";
 import { watchDeleteUserSaga } from "./deleteUserSaga";
+import { watchCheckAuthStatus } from "./authSaga";
 
 /* Корневой сага */
 export default function* rootSaga() {
   yield all([
+    watchCheckAuthStatus(),
     watchLoginSaga(),
     watchFilesSaga(),
     watchDeleteFileSaga(),

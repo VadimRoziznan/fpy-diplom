@@ -1,10 +1,11 @@
-import React from "react";
+import React , { useEffect } from "react";
 import {
   Routes,
   Route,
   BrowserRouter,
+  useLocation
 } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Provider, useSelector, useDispatch } from "react-redux";
 import { Home } from "./pages/Home";
 import { Layout } from "./components/Layout";
 import { LoginPage } from "./pages/LoginPage";
@@ -15,11 +16,30 @@ import { NotFound } from "./pages/NotFoundPages";
 import { PrivateRoute } from "./utils/PrivateRoute";
 import { UserFilesPage } from "./pages/UserFilesPage";
 import store from "./redux/store";
+import { checkAuthStatus } from "./redux/reducers/loginSlice"; // Импортируем checkAuthStatus
+
 import "./App.css";
+import { Loading } from "./components/Loading";
+
 
 function App() {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
+  const isLoading = useSelector((state) => state.login.isLoading);
+  const isLogoutSuccess = useSelector((state) => state.login.isLogoutSuccess);
+
+
+  useEffect(() => {
+    if (!isAuthenticated && !isLoading && !isLogoutSuccess) {
+      console.log("Dispatching checkAuthStatus");
+      dispatch(checkAuthStatus());
+    }
+  }, [dispatch, isAuthenticated, isLogoutSuccess]);
+
+
+
   return (
-    <Provider store={store}>
+    /*<Provider store={store}>*/
       <BrowserRouter>
         <Layout>
           <Routes>
@@ -42,7 +62,7 @@ function App() {
           </Routes>
         </Layout>
       </BrowserRouter>
-    </Provider>
+    /*</Provider>*/
   );
 }
 

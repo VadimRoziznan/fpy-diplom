@@ -15,7 +15,7 @@ export function* fetchUsersSaga(action) {
     yield put(fetchUsersSuccess(data)); // Сохраняем данные в Redux
   } catch (error) {
     yield put(fetchUsersFailure(error.message));
-    yield call(Swal.fire, {
+    yield call([Swal, Swal.fire], {
       icon: "error",
       title: "Ошибка подключения к серверу",
       text: "Пожалуйста, попробуйте снова позже.",

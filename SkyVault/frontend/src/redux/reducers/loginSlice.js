@@ -5,6 +5,7 @@ const initialState = {
   isLoading: false,
   error: null,
   isAuthenticated: false,
+  isLogoutSuccess: false,
 };
 
 /* Авторизация при входе */
@@ -30,6 +31,14 @@ const loginSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false; // Сбрасываем авторизацию при выходе
+      state.isLoading = false; // Сбрасываем состояние загрузки
+      state.isLogoutSuccess = true;
+    },
+    resetLogoutSuccess: (state) => {
+      state.isLogoutSuccess = false;
+    },
+    checkAuthStatus: (state) => {
+      state.isLoading = true; // Можно установить состояние загрузки
     },
   },
 });
@@ -39,6 +48,10 @@ export const {
   fetchLoginSuccess,
   fetchLoginFailure,
   logout,
+  resetLogoutSuccess,
+  checkAuthStatus,
 } = loginSlice.actions;
 
 export default loginSlice.reducer;
+
+

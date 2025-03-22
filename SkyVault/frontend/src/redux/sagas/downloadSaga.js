@@ -28,7 +28,7 @@ export function* downloadFileSaga(action) {
     console.error("Ошибка загрузки файла:", error);
     yield put(downloadFileFailure(error.message));
 
-    yield call(Swal.fire, {
+    yield call([Swal, Swal.fire], {
       icon: "error",
       title: "Ошибка загрузки файла",
       text: "Пожалуйста, попробуйте снова позже.",

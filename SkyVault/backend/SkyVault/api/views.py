@@ -8,7 +8,7 @@ from users.models import User
 
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -20,11 +20,38 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.utils import timezone
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.contrib.auth import logout
 
 
-@method_decorator(ensure_csrf_cookie, name='dispatch')
-@permission_classes([AllowAny])
+
+def check_session(request):
+    print("check_session")
+    if request.user.is_authenticated:
+        return JsonResponse({
+            "is_authenticated": True,
+            "user": {
+                "id": request.user.id,
+                "username": request.user.username,
+                "first_name": request.user.first_name,
+                "last_name": request.user.last_name,
+                "role": request.user.is_staff,  # Например, для проверки роли
+            }
+        })
+    return JsonResponse({"is_authenticated": False})
+
+@require_POST
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)  # Завершаем сессию только если пользователь авторизован
+        return JsonResponse({"message": "Logged out successfully"}, status=200)
+    return JsonResponse({"message": "Already logged out"}, status=200)
+
+@method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
+    permission_classes = [AllowAny]  # Доступно всем
     """
     Представление для аутентификации пользователя
     """
@@ -51,9 +78,10 @@ class LoginView(APIView):
 
 
 
-@method_decorator(ensure_csrf_cookie, name='dispatch')
-@permission_classes([AllowAny])
+@method_decorator(csrf_exempt, name='dispatch')
 class RegisterView(APIView):
+    permission_classes = [AllowAny]
+    authentication_classes = []  # Отключаем любую аутентификацию (включая сессии)
     """
     Представление для регистрации нового пользователя.
     """
@@ -81,13 +109,14 @@ class RegisterView(APIView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-@permission_classes([AllowAny])
 class UserFilesView(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Представление для получения и удаление файлов пользователя.
     """
 
     def get(self, request, pk, *args, **kwargs):
+        print(pk)
         """
         Получение файлов пользователя
         """
@@ -142,14 +171,15 @@ class UserFilesView(APIView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-@permission_classes([AllowAny])
 class UploadFileView(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Представление для загрузки файлов на сервер.
     """
     parser_classes = [MultiPartParser, FormParser]  # Для обработки файлов
 
     def post(self, request, user_id, *args, **kwargs):
+        print("sergwgwegwerge")
         """
         Загрузки файлов.
         """
@@ -206,8 +236,8 @@ class UploadFileView(APIView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-@permission_classes([AllowAny])
 class DownloadFileView(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Представление для выгрузки файлов по их ID.
     """
@@ -240,22 +270,23 @@ class DownloadFileView(APIView):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-@permission_classes([AllowAny])
 class DashboardView(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Представление для отображения панели администратора.
     """
 
-    def get(self, request, pk, *args, **kwargs):
+    def get(self, request, user_id, *args, **kwargs):
+        print("DashboardView")
         """
         Проверяет, является ли пользователь администратором, и возвращает список всех пользователей.
         """
         # Проверка существования пользователя
         try:
-            user = User.objects.get(pk=pk)
+            user = User.objects.get(pk=user_id)
         except User.DoesNotExist:
             return Response(
-                {"error": f"Пользователь с id №{pk} не существует"},
+                {"error": f"Пользователь с id №{user_id} не существует"},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -267,7 +298,8 @@ class DashboardView(APIView):
             )
 
         # Получение списка всех пользователей
-        users = User.objects.exclude(id=pk)
+        users = User.objects.exclude(id=user_id)
+        print(users)
         serializer = UserSerializer(users, many=True)
 
         # Возвращаем список пользователей с дополнительными полями
@@ -275,8 +307,8 @@ class DashboardView(APIView):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-@permission_classes([AllowAny])
 class changeUserStatusAdmin(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Представление для изменения статуса is_staff у пользователя.
     """
@@ -303,8 +335,8 @@ class changeUserStatusAdmin(APIView):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-@permission_classes([AllowAny])
 class RenameFileView(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Представление для переименования файла.
     """
@@ -380,8 +412,8 @@ class RenameFileView(APIView):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-@permission_classes([AllowAny])
 class ChangeFileCommentView(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Представление для изменения комментария к файлу.
     """
@@ -433,8 +465,8 @@ class ChangeFileCommentView(APIView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-@permission_classes([AllowAny])
 class GetShareLinkView(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Представление формирующее ссылку для скачивания файла.
     """
@@ -451,6 +483,10 @@ class GetShareLinkView(APIView):
         except File.DoesNotExist:
             return Response({"error": f"Файла с id №{file_id} не существует"}, status=status.HTTP_404_NOT_FOUND)
 
+        # Выводим информацию для отладки
+        print(f"File path: {file.file.path}")
+        print(f"File URL: {file.file.url}")
+
         # Генерируем абсолютную ссылку на файл
         file_link = request.build_absolute_uri(file.file.url)
 
@@ -458,8 +494,8 @@ class GetShareLinkView(APIView):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-@permission_classes([AllowAny])
 class UserDeleteView(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Представление для удаления пользователя.
     """

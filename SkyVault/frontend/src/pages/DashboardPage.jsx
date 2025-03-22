@@ -40,11 +40,11 @@ export const DashboardPage = () => {
   }, [dispatch, userId]);
 
   /* Обновляем данные файлов при смене пользователя или страницы */
-  useEffect(() => {
+  /*useEffect(() => {
     if (userId) {
       dispatch(fetchFilesRequest(userId));
     }
-  }, [dispatch, userId, location.pathname]);
+  }, [dispatch, userId, location.pathname]);*/
 
   /* Обработчик изменения категории */
   const handleCategoryChange = (category) => {
