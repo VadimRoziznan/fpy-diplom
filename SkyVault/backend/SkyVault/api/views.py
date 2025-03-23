@@ -37,7 +37,7 @@ def check_session(request):
                 "username": request.user.username,
                 "first_name": request.user.first_name,
                 "last_name": request.user.last_name,
-                "role": request.user.is_staff,  # Например, для проверки роли
+                "role": request.user.is_staff,
             }
         })
     return JsonResponse({"is_authenticated": False})
@@ -116,7 +116,6 @@ class UserFilesView(APIView):
     """
 
     def get(self, request, pk, *args, **kwargs):
-        print(pk)
         """
         Получение файлов пользователя
         """
@@ -179,7 +178,6 @@ class UploadFileView(APIView):
     parser_classes = [MultiPartParser, FormParser]  # Для обработки файлов
 
     def post(self, request, user_id, *args, **kwargs):
-        print("sergwgwegwerge")
         """
         Загрузки файлов.
         """

@@ -38,7 +38,7 @@ const loginSlice = createSlice({
       state.isLogoutSuccess = false;
     },
     checkAuthStatus: (state) => {
-      state.isLoading = true; // Можно установить состояние загрузки
+      state.isLoading = true;
     },
   },
 });

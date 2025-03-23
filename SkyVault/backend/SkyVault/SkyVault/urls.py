@@ -28,32 +28,7 @@ from api.views import ( check_session, logout_view,
 )
 
 
-
-
-# urlpatterns = [
-#     path("api/auth/session/", check_session, name="check_session"),
-#     path("api/auth/logout/", logout_view, name="logout"),
-#     path("admin/", admin.site.urls),
-#     # path('', include('api.urls')),
-#     path('login/', LoginView.as_view(), name='login'),
-#     path('register/', RegisterView.as_view(), name='register'),
-#     path('dashboard/<int:user_id>/', DashboardView.as_view(), name='dashboard'),
-#     path('user-files/<int:user_id>/', UploadFileView.as_view(), name='upload'),
-#     path('download/<path:file_id>/', DownloadFileView.as_view(), name='download'),
-#     path('rename-file/', RenameFileView.as_view(), name='rename_file'),
-#     path('change-file-comment/', ChangeFileCommentView.as_view(), name='change_file_comment'),
-#     path('get-share-link/', GetShareLinkView.as_view(), name='get_share-link'),
-#     path('user-delete/', UserDeleteView.as_view(), name='user_delete'),
-#     path('dashboard/change-status/user/<int:user_id>/', changeUserStatusAdmin.as_view(), name='change_user_status'),
-#     path('storage/<int:pk>/', UserFilesView.as_view(), name='storage'),
-#     # Универсальный маршрут для React (должен быть последним)
-#     re_path(
-#         r'^(?!admin/|api/|dashboard/|login/|register/|user-files/|download/|rename-file/|change-file-comment/|get-share-link/|user-delete/|dashboard/change-status/user/|storage/|api/auth/session/|api/auth/logout/).*$',
-#         TemplateView.as_view(template_name="index.html"), name='home1'),
-# ]
-
 urlpatterns = [
-    # API-маршруты (все с префиксом /api/)
     path("api/auth/session/", check_session, name="check_session"),
     path("api/auth/logout/", logout_view, name="logout"),
     path("api/dashboard/<int:user_id>/", DashboardView.as_view(), name="dashboard_api"),
@@ -65,15 +40,11 @@ urlpatterns = [
     path("api/user-delete/", UserDeleteView.as_view(), name="user_delete_api"),
     path("api/dashboard/change-status/user/<int:user_id>/", changeUserStatusAdmin.as_view(), name="change_user_status_api"),
     path("api/storage/<int:pk>/", UserFilesView.as_view(), name="storage_api"),
-
-    # Маршруты для страниц (не API)
     path("admin/", admin.site.urls),
     path("login/", LoginView.as_view(), name="login"),
     path("register/", RegisterView.as_view(), name="register"),
-
-    # Универсальный маршрут для React (должен быть последним)
     re_path(
-        r'^(?!admin/|api|media/).*$',  # Исключаем только /admin/ и /api/
+        r'^(?!admin/|api|media/).*$',
         TemplateView.as_view(template_name="index.html"),
         name="react_app"
     ),

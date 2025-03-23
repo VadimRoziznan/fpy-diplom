@@ -28,7 +28,7 @@ const registerSlice = createSlice({
       state.error = action.payload;
     },
     resetUser(state) {
-      state.user = null; // Сброс userId
+      state.user = null; // Сброс user
     },
   },
 });

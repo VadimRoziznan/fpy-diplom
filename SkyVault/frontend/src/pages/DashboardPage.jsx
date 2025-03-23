@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CategoriesMenu } from "../components/CategoriesMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFilesRequest } from "../redux/reducers/fileManagerSlice";
 import { Loading } from "../components/Loading";
 import { OperationsMenu } from "../components/OperationsMenu";
 import { sectionsList } from "../constants/menuLists";
@@ -26,7 +25,6 @@ export const DashboardPage = () => {
   const [checkedUser, setCheckedUser] = useState([]);
   //eslint-disable-next-line
   const [hoveredUserId, setHoveredUserId] = useState(null);
-  const location = useLocation();
 
 
   /* Синхронизация состояния users с usersData */
@@ -38,13 +36,6 @@ export const DashboardPage = () => {
   useEffect(() => {
     dispatch(fetchUsersRequest(userId));
   }, [dispatch, userId]);
-
-  /* Обновляем данные файлов при смене пользователя или страницы */
-  /*useEffect(() => {
-    if (userId) {
-      dispatch(fetchFilesRequest(userId));
-    }
-  }, [dispatch, userId, location.pathname]);*/
 
   /* Обработчик изменения категории */
   const handleCategoryChange = (category) => {

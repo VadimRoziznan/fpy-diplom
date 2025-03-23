@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: [], // Список файлов
+  data: [], 
   isLoading: false,
   error: null,
 };

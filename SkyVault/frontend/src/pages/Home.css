@@ -1,6 +1,6 @@
 .img-size {
   max-height: 600px;
-  transform-origin: center; /* Центрируем уменьшение */
+  transform-origin: center;
 }
 
 .banner-bg {

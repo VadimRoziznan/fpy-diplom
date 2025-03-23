@@ -78,12 +78,6 @@ SESSION_COOKIE_SECURE = True  # Для локальной разработки (
 #CSRF_CHECK = False
 
 
-
-
-#SESSION_COOKIE_SAMESITE = 'Lax'  # Защита от CSRF-атак
-
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -97,7 +91,6 @@ INSTALLED_APPS = [
 
     "SkyVault",
     "api",
-    #'users',
     "vault",
     'users.apps.UsersConfig',
 
@@ -107,16 +100,6 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-# MIDDLEWARE = [
-#     'corsheaders.middleware.CorsMiddleware',
-#     'django.middleware.csrf.CsrfViewMiddleware',
-#     "django.middleware.security.SecurityMiddleware",
-#     "django.contrib.sessions.middleware.SessionMiddleware",
-#     "django.middleware.common.CommonMiddleware",
-#     "django.contrib.auth.middleware.AuthenticationMiddleware",
-#     "django.contrib.messages.middleware.MessageMiddleware",
-#     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-# ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -202,7 +185,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-#STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -226,7 +208,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',  # Для обработки файлов
         'rest_framework.parsers.FormParser',  # Для обработки форм
     ],
-    'DEFAULT_RENDERER_CLASSES': [  # Добавь эту секцию
+    'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',  # Только JSON-ответы
     ],
 }
@@ -240,7 +222,6 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"  # Папка для собранных статических файлов
 
-# Укажи путь к index.html для React
 
 CACHES ={
     'default': {
